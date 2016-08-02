@@ -1,0 +1,19 @@
+\documentclass{memoir}
+\usepackage{ocmc-liturgical-text}
+\input{control}
+\title{Demo of String Appending}
+\author{YoDude MyBud}
+\begin{document}
+\section{Append Test}
+
+\ltAppendLeft{apple}
+\begingroup
+\global\ltAppendLeft{banana} % scope is global
+\ltAppendLeft{orange} % scope local to group
+\endgroup
+\ltLeftAppended
+\ltClearLeft
+\ltLeftAppended
+\end{document}
+
+

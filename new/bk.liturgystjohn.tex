@@ -1,0 +1,66 @@
+\documentclass[]{memoir}
+% Base fonts available for memoir are:
+% 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt, 25pt, 
+% 30pt, 36pt, 48pt and 60pt
+%
+% The best font size for a printed service book used by the clergy is 14.
+% For a printed service book used by the people, set it to 11 or 12.
+% For a PDF to be viewed on a smart phone or a tablet, set it to 20.
+%
+%
+% Note: keys must not have an underscore _ as part of the value.
+%
+% Issue: when using a font size greater than 12pt, the Greek might
+% spill outside the margin when doing bilingual text.  This problem will exist until I figure out
+% how to get hyphenation to work for Greek.
+%
+\usepackage[]{ocmc-liturgical-text} % includes packages and creates new commands
+\input{control} % control.tex allows you to easily change settings
+\begin{document}
+%	\huge\ltSid{matinsforsunday}{p0001.title.cover}%
+%\ltSid{client}{li.patriarchate.alexandria.title.cover}%
+%\ltSid{matinsforsunday}{p0001.title.cover}
+\begin{titlingpage}
+\openup .5em
+\begin{center}
+\vspace*{12\baselineskip}
+\begin{minipage}{25em}
+\begin{center}
+\linespread{2}
+\huge\ltSid{pub.priest.servicebook}{li.liturgy.title.cover}\normalsize
+\end{center}
+\end{minipage}
+\vfill
+\includegraphics[width=.5\textwidth]{images/icxcnika.jpg}
+\ltSid{client}{li.patriarchate.alexandria.title.cover}
+\end{center}
+
+\end{titlingpage}
+\frontmatter
+
+\pagebreak
+
+\tableofcontents
+
+\vfill
+
+\pagebreak
+
+\mainmatter
+
+\ltSetNumberColumns{2}
+\ltSetPrimaryDomain{gr}{gr}{cog}
+\ltSetRightDomain{en}{uk}{lash}
+
+%\ltActorDialog
+%\ltActorRubricDialog
+%\ltActorDialogRubric
+%\ltActorRubricDialogRubric
+
+\input{tmp.liturgystjohn}
+ 
+\vfill
+
+\pagebreak
+
+\end{document}

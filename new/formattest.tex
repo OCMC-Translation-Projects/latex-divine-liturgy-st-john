@@ -1,0 +1,38 @@
+% use this template to test formatting after making changes to ocmc-liturgical-text.sty
+\documentclass[]{memoir}
+\usepackage[]{ocmc-liturgical-text} % includes packages and creates new commands
+\input{control} % control.tex allows you to easily change settings
+%====================================================
+% PROTOTYPE COMMANDS
+
+%====================================================
+\begin{document}
+
+\ltSetNumberColumns{2}
+\ltSetPrimaryDomain{gr}{gr}{cog}
+\ltSetRightDomain{en}{uk}{lash}
+
+%\def\actorOnSeparateLine{}
+
+% this won't work when do actor on same line
+% instead use \ltActorWithFirstDialog
+%\ltActor{\ltSid{actors}{Priest}}
+%\ltDialog{\ltSid{prayers}{res04}}
+
+%\ltSidsFormat{}{\ltTextRed}{\ltTextBlack}{\ltTextRed}
+%\ltSids{actors}{Priest}{actors}{Deacon}{actors}{People}{actors}{Choir}
+
+%\ltActorWithFirstDialog{actors}{Deacon}{prayers}{res04}{rubrical}{Aloud}
+
+%\ltActorWithFirstDialog{actors}{Deacon}{prayers}{res04}
+
+%\ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}
+%\ltDialog{\ltSids{misc}{vVerse3}{ps}{psa102.v19.text}{ps}{psa102.v19.number}}
+
+\ltActorDialog{actors}{Deacon}{prayers}{res04}
+\ltActorRubricDialog{actors}{Deacon}{rubrical}{Aloud}{prayers}{res04}
+\ltActorDialogRubric{actors}{Deacon}{prayers}{res04}{pub.priest.servicebook}{li.rubric.eachpetition}
+\ltActorRubricDialogRubric{actors}{Deacon}{rubrical}{Aloud}{prayers}{res04}{pub.priest.servicebook}{li.rubric.eachpetition}
+
+
+\end{document}

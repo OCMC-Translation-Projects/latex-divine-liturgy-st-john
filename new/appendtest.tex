@@ -1,0 +1,41 @@
+% use this template to test formatting after making changes to ocmc-liturgical-text.sty
+\documentclass[]{memoir}
+\usepackage[]{ocmc-liturgical-text} % includes packages and creates new commands
+\input{control} % control.tex allows you to easily change settings
+\begin{document}
+\section{Append Test}
+\ltSetNumberColumns{1}
+\ltSetPrimaryDomain{gr}{gr}{cog}
+\ltSetRightDomain{en}{uk}{lash}
+
+\ltAppendLeft{apple}
+\begingroup
+\global\ltAppendLeft{banana} % scope is global
+\ltAppendLeft{orange} % scope local to group
+\endgroup
+\ltLeftAppended
+\ltClearLeft
+\ltLeftAppended
+
+\ltNewSid{actors}{People}
+\ltLeftAppended
+
+\ltFormat{%
+%    \ltMulti{%
+%        \ltRed{%
+%        \ltGetVal{gr}{gr}{cog}{actors}{People}
+            \ltNewSid{actors}{People}
+%        }%
+%        \ltBlack{%
+% \ltGetVal{gr}{gr}{cog}{actors}{People}     
+            \ltNewSid{actors}{People}
+%        }%
+%        \ltRed{%
+%\ltGetVal{gr}{gr}{cog}{actors}{People}
+            \ltNewSid{actors}{People}
+%        }%
+%    }%
+}  
+
+
+\end{document}
