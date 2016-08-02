@@ -525,26 +525,11 @@ Script=Arabic%
 \newcommand\ltCover[1]{\ltSetTypeographyDefault\huge{#1}}%
 \newcommand\ltDesignation[1]{\ltSetTypeography{\ltTextRed}#1\ltSetTypeographyDefault}%
 
-\DeclareDocumentCommand\ltDialog{m m g g g g g g} {%
-    \ltSidsFormatReset%
-    \ltSidsFormat{\ltTextBlack}%
-    \IfValueTF {#7}{%
-        \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
-    }{%
-        \IfValueTF {#5}{%
-            six parm dialog
-            \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
-        }{%
-            \IfValueTF {#3}{%
-            four parm dialog
-                \ltSids{#1}{#2}{#3}{#4}%
-            }{%
-            two parm dialog
-            \ltSids{#1}{#2}%
-            }%
-        }%
-    }%
-}
+\newcommand\ltDialog[1]{%
+\ltSetTypeographyDefault{%
+}%
+#1%
+}%
 
 \newcommand\ltHymn[1]{%
 \ltSetTypeographyDefault{%
@@ -613,7 +598,7 @@ Script=Arabic%
             \IfEndWith{#3}{colon}{%
                 \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
             }{%
-                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3.colon}%
+                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3.colon}%                
             }%
         }%
     }{%
@@ -717,9 +702,9 @@ Script=Arabic%
     \global\def\theCenter{}% set to be empty
     \global\def\theRight{}% set to be empty
 }
-\DeclareDocumentCommand\ltSids{m m g g g g g g } {%
+\DeclareDocumentCommand\ltSids{m m m m g g g g } {%
     \ltAppendersReset%
-    \ltSidsAppendersLeft{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}
+    \ltSidsAppendersLeft{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
     {\IfStrEqCase{\pgfkeysvalueof{\my/current/cols}}{%
         {1}{%  output one column
             }%
@@ -732,7 +717,7 @@ Script=Arabic%
             }%
     }[]%
     }%    
-    \ltFormatThree{\theLeft}{\theCenter}{\theRight}
+    \ltFormatThree{\theLeft}{\theCenter}{\theRight}%
 }
 
 \DeclareDocumentCommand\ltSidsAppendersLeft{m m m m g g g g } {%
@@ -791,37 +776,49 @@ Script=Arabic%
 }
 
 \DeclareDocumentCommand\ltActorDialog{m m m m g g g g}{%
-    \ltSidsFormat{\ltTextRed}{\ltTextBlack}
-    \ifdef{\actorOnSeparateLine}{%
+        \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}%
+        \ifdef{\actorOnSeparateLine}{%
         \ltActor{\ltSid{#1}{#2}}%
         
-        \ltDialog{#3}{#4}{#5}{#6}{#7}{#8}%
+        \ltDialog{\ltSids{#3}{#4}{#5}{#6}{#7}{#8}}%
     }{%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}{#7}{#8}%
     }%
 }
+
+\DeclareDocumentCommand\ltActorDialogLowVoice{ m m m m g g }{%
+    \ifdef{\actorOnSeparateLine}{%
+        \ltActor{\ltSid{#1}{#2}}%
+        
+        \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
+        \ltDialog{\ltSids{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}}%
+    }{%
+        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
+        \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
+    }%
+}
+
+%\newcommand{\ltActorDialogLowVoice}[4]{%
+%    \ifdef{\actorOnSeparateLine}{%
+%        \ltActor{\ltSid{#1}{#2}}%
+%        \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
+%        \ltDialog{\ltSids{rubrical}{InALowVoice}{#3}{#4}}%
+%    }{%
+%        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
+%        \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}%
+%    }%
+%}
+
 \newcommand{\ltActorRubricDialog}[6]{%
     \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
     \ifdef{\actorOnSeparateLine}{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}%
         \ltSids{#1}{#2}{#3}{#4}%
         
-        \ltDialog{#5}{#6}%
+        \ltDialog{\ltSid{#5}{#6}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}
-        \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
-    }%
-}
-
-\newcommand{\ltActorDialogLowVoice}[4]{%
-    \ifdef{\actorOnSeparateLine}{%
-        \ltActor{\ltSid{#1}{#2}}%
-        
-        \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
-        \ltDialog{rubrical}{InALowVoice}{#3}{#4}%
-    }{%
-        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
-        \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}%
+        \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}%
     }%
 }
 
@@ -835,7 +832,7 @@ Script=Arabic%
         \ltActor{\ltSid{#1}{#2}}%
         
         \ltSidsFormat{\ltTextBlack}{\ltTextRed}%
-        \ltDialog{#3}{#4}{#5}{#6}%
+        \ltDialog{\ltSids{#3}{#4}{#5}{#6}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}%
@@ -847,7 +844,7 @@ Script=Arabic%
         \ltSids{#1}{#2}{#3}{#4}%
         
         \ltSidsFormat{\ltTextBlack}{\ltTextRed}%
-        \ltDialog{#5}{#6}{#7}{#8}%
+        \ltDialog{\ltSids{#5}{#6}{#7}{#8}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}{#7}{#8}%
@@ -859,7 +856,7 @@ Script=Arabic%
     \ifdef{\actorOnSeparateLine}{%
         \ltActor{\ltSid{#1}{#2}}%
         
-        \ltDialog{#3}{#4}%
+        \ltDialog{\ltSid{#3}{#4}}%
     }{%
         \ltSids{#1}{#2.colon}{#3}{#4}%
     }%
@@ -870,7 +867,7 @@ Script=Arabic%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}%
         \ltSids{#1}{#2}{#3}{#4}%
         
-        \ltDialog{#5}{#6}%
+        \ltDialog{\ltSid{#5}{#6}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}
         \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
@@ -881,7 +878,7 @@ Script=Arabic%
         \ltActor{\ltSid{#1}{#2}}%
         
         \ltSidsFormat{\ltTextBlack}{\ltTextRed}%
-        \ltDialog{#3}{#4}{#5}{#6}%
+        \ltDialog{\ltSids{#3}{#4}{#5}{#6}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}%
@@ -893,7 +890,7 @@ Script=Arabic%
         \ltSids{#1}{#2}{#3}{#4}%
         
         \ltSidsFormat{\ltTextBlack}{\ltTextRed}%
-        \ltDialog{#5}{#6}{#7}{#8}%
+        \ltDialog{\ltSids{#5}{#6}{#7}{#8}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}{#7}{#8}%
