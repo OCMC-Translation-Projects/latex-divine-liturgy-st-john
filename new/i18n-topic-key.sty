@@ -62,8 +62,6 @@ false
 % The new way supports \itKey fully specified
 % or \itkey with just a key.  For the latter
 % it is necessary to first set \itTopic.
-% But, you need to modify ocmc-liturgical-text.sty
-% resource loading.
 \DeclareDocumentCommand\itKey{m m g g g g}{%
     \IfValueTF {#3} {%
         \global\itTopic{#1}{#2}{#3}{#4}%

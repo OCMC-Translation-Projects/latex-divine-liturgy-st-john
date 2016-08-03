@@ -273,7 +273,7 @@
 
 \ltActorDialog{actors}{Deacon}{eu.lichrysbasil}{euLI.Key0602.text} 
 
-\ltActorHymn{actors}{People}{ho.s07}{hoLI.TrisagiosHymn.text}} 
+\ltActorHymn{actors}{People}{ho.s07}{hoLI.TrisagiosHymn.text} 
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.trisagionclergy}} 
 
@@ -344,8 +344,7 @@
 
 \ltActorDialog{actors}{People}{prayers}{res05} 
 
-\ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}{\ltTextBlack}
-\ltDialog{\ltSids{actors}{Deacon}{rubrical}{cl.eu.lichrysbasil.R011a}{rubrical}{cl.eu.lichrysbasil.R011b}{rubrical}{cl.eu.lichrysbasil.R011c}}
+\ltActorDialog{actors}{Deacon}{rubrical}{cl.eu.lichrysbasil.R011}
 
 \ltActorDialog{actors}{People}{prayers}{DoxaSoiKyrie} 
 
@@ -379,7 +378,7 @@
 
 \ltActorDialogRubric{actors}{People}{prayers}{res01}{pub.priest.servicebook}{li.rubric.thriceeach}
 
-\ltActorDialog{actors}{Deacon}{pub.priest.servicebook}{li.pet19lash} 
+\ltActorDialogRubricDialog{actors}{Deacon}{pub.priest.servicebook}{li.pet19lash.a}{rubrical}{name}{pub.priest.servicebook}{li.pet19lash.b}
 
 \ltDialog{\ltSid{pub.priest.servicebook}{li.pet21lash}} 
 
@@ -389,18 +388,13 @@
 
 \ltActorDialog{actors}{People}{prayers}{res01} 
 
-\end{document}
-
 \ltSection{pub.priest.servicebook}{li.ekteniaprayer.title}
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltInaudible{\ltSid{eu.lichrysbasil}{euLI.Key0801.text}} 
+\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0801.text} 
 
-\ltActor{\ltSid{rubrical}{Aloud}} 
-\ltDialog{\ltSid{prayers}{exc11}} 
+\ltDialogAloud{prayers}{exc11} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res04}} 
+\ltActorDialog{actors}{People}{prayers}{res04} 
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.catechumens}} 
 
@@ -408,8 +402,7 @@
 
 \ltDialog{\ltSid{prayers}{res01}} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{eu.lichrysbasil}{euLI.Key0901.text}} 
+\ltActorDialog{actors}{PriestOrDeacon}{eu.lichrysbasil}{euLI.Key0901.text}
 
 \ltDialog{\ltSid{eu.lichrysbasil}{euLI.Key0902.text}} 
 
@@ -425,45 +418,37 @@
 
 \ltDialog{\ltSid{eu.lichrysbasil}{euLI.Key0908.text}} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res03}} 
+\ltActorDialog{actors}{People}{prayers}{res03}
 
 \ltSection{pub.priest.servicebook}{li.prayercatechumens.title}
 
 \ltMixed{\ltSid{pub.priest.servicebook}{li.beforeantimension.title.doc}} 
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltInaudible{\ltSid{eu.lichrysbasil}{euLI.Key0909.text}} 
+\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0909.text}
 
-\ltActor{\ltSid{rubrical}{Aloud}} 
-\ltDialog{\ltSid{eu.lichrysbasil}{euLI.Key0910.text}} 
+\ltDialogAloud{eu.lichrysbasil}{euLI.Key0910.text} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res04}} 
+\ltActorDialog{actors}{People}{prayers}{res04} 
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.unfoldantimension}} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{eu.lichrysbasil}{euLI.Key0911.text}} 
+\ltActorDialog{actors}{Deacon}{eu.lichrysbasil}{euLI.Key0911.text}
 
 \ltSection{pub.priest.servicebook}{li.liturgyfaithful.title}
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{eu.lichrysbasil}{euLI.Key0912.text}\ltSid{prayers}{pet14}} 
+\ltActorDialog{actors}{Deacon}{eu.lichrysbasil}{euLI.Key0912.text}{prayers}{pet14} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res01}} 
+\ltActorDialog{actors}{People}{prayers}{res01}
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{pet12}} 
+\ltActorDialog{actors}{Deacon}{prayers}{pet12} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res01}} 
+\ltActorDialog{actors}{People}{prayers}{res01} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{exc17}} 
+\ltActorDialog{actors}{Deacon}{prayers}{exc17} 
 
 \ltSection{pub.priest.servicebook}{li.prayer1faithful.title}
+\end{document}
+
 
 \ltDesignation{\ltSid{pub.priest.servicebook}{li.afterantimension.title.doc}} 
 
