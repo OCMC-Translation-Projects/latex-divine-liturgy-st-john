@@ -2,6 +2,7 @@
 \ProvidesPackage{i18n-topic-key}[2016/07/20 i18n topic-key Package]
 
 \RequirePackage{pgfkeys}
+\RequirePackage{xparse}
 \RequirePackage{etoolbox}
 \RequirePackage{color}
 \RequirePackage{xcolor}
@@ -52,9 +53,26 @@ false
 \newcommand{\itTopic}[4]{%
     \renewcommand{\itCurrentTopic}{/#1/#2/#3/#4}%
 }
-\newcommand{\itKey}[2]{%
-\pgfkeys{%
-\itCurrentTopic/#1/.initial={#2}}%
+%% The old way works just fine. 
+%\newcommand{\itKey}[2]{%
+%\pgfkeys{%
+%\itCurrentTopic/#1/.initial={#2}}%
+%}
+
+% The new way supports \itKey fully specified
+% or \itkey with just a key.  For the latter
+% it is necessary to first set \itTopic.
+% But, you need to modify ocmc-liturgical-text.sty
+% resource loading.
+\DeclareDocumentCommand\itKey{m m g g g g}{%
+    \IfValueTF {#3} {%
+        \global\itTopic{#1}{#2}{#3}{#4}%
+        \pgfkeys{%
+        \itCurrentTopic/#5/.initial={#6}}%
+    }{%
+        \pgfkeys{%
+        \itCurrentTopic/#1/.initial={#2}}%
+    }%
 }
 %=======================================
 % VALUE RETRIEVAL

@@ -249,20 +249,18 @@ addtohook={%
 \newcommand{\loadResource}[4]{%
     \IfFileExists{%
         \pgfkeysvalueof{\my/resources/path}/#1_#2_#3/res.#4.tex%
-    }%
-    {%
+    }{%
         \pgfkeysifdefined{\myLoadedResources/#1/#2/#3/#4}{%
         }{%
         % for some reason, \input adds a space
         \ignorespaces\input{\pgfkeysvalueof{\my/resources/path}/#1_#2_#3/res.#4.tex}\unskip%
         \addResource{#1}{#2}{#3}{#4}%
         }%
-    }%
-    {% false
-    missing \PackageError{ocmc-liturgical-text}{Missing \pgfkeysvalueof{\my/resources/path} #1_#2_#3/res.#4.tex}%
-    {%
-    Add the missing file.%
-    }%    
+    }{% false
+        missing \PackageError{ocmc-liturgical-text}{Missing \pgfkeysvalueof{\my/resources/path} #1_#2_#3/res.#4.tex}%
+        {%
+        Add the missing file.%
+        }%    
     }%
 }
 %================================================

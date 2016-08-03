@@ -259,6 +259,7 @@
 \ltDialog{\ltSid{prayers}{exc05b}} 
 
 \ltActorDialog{actors}{People}{prayers}{res04} 
+\ltSidsFormat{\ltTextBlack}
 
 \ltHymn{\ltSid{ho.s07}{hoLI.TrisagiosHymn.text}} 
 
@@ -268,7 +269,7 @@
 
 \ltVerse{\ltSid{pub.priest.servicebook}{doxapatrikainyn}} 
 
-\ltHymnlinelast{\ltSid{ho.s07}{hoLI.TrisagiosHymn3.text}\ltSid{ho.s07}{hoLI.TrisagiosHymn4.text}} 
+\ltHymnlinelast{\ltSids{ho.s07}{hoLI.TrisagiosHymn3.text}{ho.s07}{hoLI.TrisagiosHymn4.text}} 
 
 \ltActorDialog{actors}{Deacon}{eu.lichrysbasil}{euLI.Key0602.text} 
 
@@ -288,100 +289,73 @@
 
 \ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0606.text}
 
-\ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextRed}%
-\ltSids{eu.lichrysbasil}{euLI.Key0606.text}{rubrical}{InALowVoice}%
-
-
-\end{document}
-
-
 \ltSection{pub.priest.servicebook}{li.readings.title}
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{exc19}} 
+\ltActorDialog{actors}{PriestOrDeacon}{prayers}{exc19} 
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltDialog{\ltSid{prayers}{pet31}} 
+\ltActorDialog{actors}{Priest}{prayers}{pet31}
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res05}} 
+\ltActorDialog{actors}{People}{prayers}{res05} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{exc17}} 
+\ltActorDialog{actors}{PriestOrDeacon}{prayers}{exc17}
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.prokimenontitle}} 
 
 \ltDialog{\ltSid{pub.priest.servicebook}{li.prokimenonmode}} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{exc19}} 
+\ltActorDialog{actors}{PriestOrDeacon}{prayers}{exc19}
 
-\ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.readprokimenon}} 
+\ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.declaimprokimenon}} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{exc17}} 
+\ltActorDialog{actors}{PriestOrDeacon}{prayers}{exc17}
 
-\ltActor{\ltSid{actors}{Reader}} 
-\ltDialog{\ltSid{client}{cl.eu.lichrysbasil.R009}} 
+\ltRubric{\ltSid{rubrical}{cl.eu.lichrysbasil.R009}}
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{exc19}} 
+\ltActorDialog{actors}{PriestOrDeacon}{prayers}{exc19} 
+\ltRubric{\ltSid{rubrical}{cl.eu.lichrysbasil.R010}} 
 
-\ltActor{\ltSid{actors}{Reader}} 
-\ltRubric{\ltSid{client}{cl.eu.lichrysbasil.R010}} 
+\ltActorDialog{actors}{Priest}{prayers}{epi02} 
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltDialog{\ltSid{prayers}{epi02}} 
-
-\ltActor{\ltSid{actors}{Chanters}} 
-\ltHymn{\ltSid{prayers}{Allilouia3.text}\ltRed{\ltSid{pub.priest.servicebook}{li.rubric.withverses}}} 
+\ltActorDialogRubric{actors}{Chanters}{prayers}{Allilouia3.text}{pub.priest.servicebook}{li.rubric.withverses} 
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.censeapostolos}} 
 
 \ltSection{pub.priest.servicebook}{li.gospelprayer.title}
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltInaudible{\ltSid{eu.lichrysbasil}{euLI.Key0704.text}} 
+\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0704.text}
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.blessreader}} 
 
-\ltDialog{\ltSid{pub.priest.servicebook}{li.blessreader}} 
+\ltSidsFormat{\ltTextBlack}{\ltTextRed}{\ltTextBlack}
+\ltDialog{\ltSids{pub.priest.servicebook}{li.blessreader}{rubrical}{name}{misc}{period}} 
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.blessreader2}} 
 
-\ltDialog{\ltSid{pub.priest.servicebook}{li.blessreader2}} 
+\ltSidsFormat{\ltTextBlack}{\ltTextRed}{\ltTextBlack}
 
-\ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.givegospel}} 
+\ltDialog{\ltSids{pub.priest.servicebook}{li.blessreader2a}{rubrical}{name}{pub.priest.servicebook}{li.blessreader2b}} 
 
-\ltDialog{\ltSid{prayers}{res04}} 
-
-\ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.gospelambon}} 
+\ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}
+\ltRubric{\ltSids{pub.priest.servicebook}{li.rubric.givegospel}{prayers}{res04}{pub.priest.servicebook}{li.rubric.gospelambon}} 
 
 \ltSection{pub.priest.servicebook}{li.gospel.title}
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltDialog{\ltSid{prayers}{exc17}\ltSid{prayers}{exc18}\ltSid{prayers}{gos02}\ltSid{prayers}{pet31}} 
+\ltActorDialog{actors}{Priest}{prayers}{exc17}{prayers}{exc18}{prayers}{gos02}{prayers}{pet31} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res05}} 
+\ltActorDialog{actors}{People}{prayers}{res05} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{client}{cl.eu.lichrysbasil.R011}} 
+\ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}{\ltTextBlack}
+\ltDialog{\ltSids{actors}{Deacon}{rubrical}{cl.eu.lichrysbasil.R011a}{rubrical}{cl.eu.lichrysbasil.R011b}{rubrical}{cl.eu.lichrysbasil.R011c}}
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{DoxaSoiKyrie}} 
+\ltActorDialog{actors}{People}{prayers}{DoxaSoiKyrie} 
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltDialog{\ltSid{prayers}{exc19}} 
+\ltActorDialog{actors}{Priest}{prayers}{exc19}
 
-\ltActor{\ltSid{actors}{Deacon}} 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.readgospel}} 
 
-\ltActor{\ltSid{actors}{Priest}} 
-\ltDialog{\ltSid{prayers}{gos04}} 
+\ltActorDialog{actors}{Priest}{prayers}{gos04} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{DoxaSoiKyrie}} 
+\ltActorDialog{actors}{People}{prayers}{DoxaSoiKyrie}
 
 \ltRubric{\ltSid{pub.priest.servicebook}{li.rubric.blesswithgospel}} 
 
@@ -393,26 +367,19 @@
 
 \ltSection{pub.priest.servicebook}{li.greatlitany.title}
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{pet15}} 
+\ltActorDialog{actors}{Deacon}{prayers}{pet15}
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res01}} 
+\ltActorDialog{actors}{People}{prayers}{res01} 
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{pet16}} 
+\ltActorDialog{actors}{Deacon}{prayers}{pet16} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res01}} 
+\ltActorDialog{actors}{People}{prayers}{res01}
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{prayers}{pet17}} 
+\ltActorDialog{actors}{Deacon}{prayers}{pet17} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res01}\ltRed{\ltSid{pub.priest.servicebook}{li.rubric.thriceeach}}} 
+\ltActorDialogRubric{actors}{People}{prayers}{res01}{pub.priest.servicebook}{li.rubric.thriceeach}
 
-\ltActor{\ltSid{actors}{Deacon}} 
-\ltDialog{\ltSid{pub.priest.servicebook}{li.pet19lash}} 
+\ltActorDialog{actors}{Deacon}{pub.priest.servicebook}{li.pet19lash} 
 
 \ltDialog{\ltSid{pub.priest.servicebook}{li.pet21lash}} 
 
@@ -420,8 +387,9 @@
 
 \ltDialog{\ltSid{prayers}{pet23}} 
 
-\ltActor{\ltSid{actors}{People}} 
-\ltDialog{\ltSid{prayers}{res01}} 
+\ltActorDialog{actors}{People}{prayers}{res01} 
+
+\end{document}
 
 \ltSection{pub.priest.servicebook}{li.ekteniaprayer.title}
 
