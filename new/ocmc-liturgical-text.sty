@@ -533,6 +533,24 @@ Script=Arabic%
 #1%
 }%
 
+\DeclareDocumentCommand\ltDialogTwo{m m g g g g g g}{%
+    \ltSidsFormat{\ltTextBlack}%
+    \IfValueTF{#7}{%
+        \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+    }{%
+        \IfValueTF{#5}{%
+            \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
+        }{%
+            \IfValueTF{#3}{%
+                \ltSids{#1}{#2}{#3}{#4}%
+            }{%
+                \ltSetTypeographyDefault{}%
+                \ltSid{#1}{#2}%
+            }%
+        }%
+    }%
+}%
+
 \newcommand\ltHymn[1]{%
 \ltSetTypeographyDefault{%
 }%
@@ -723,17 +741,33 @@ Script=Arabic%
 }
 
 \DeclareDocumentCommand\ltSidsAppendersLeft{m m m m g g g g } {%
-    {%
-        \global\def\theLeft{}% first set to be empty
-        \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4}}%
-        \IfNoValueF {#5} {%
+    \global\def\theLeft{}% first set to be empty
+    \IfValueTF{#7}{%
+        \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6} \sidFourFormat\ltGetColVal{left}{#7}{#8}}%
+    }{%
+        \IfValueTF{#5}{%
             \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6}}%
-        }%
-        \IfNoValueF {#7} {%
-            \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6} \sidFourFormat\ltGetColVal{left}{#7}{#8}}%
+        }{%
+            \IfValueTF{#3}{%
+                \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4}}%
+            }{%
+                \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2}}%
+            }%
         }%
     }%
+%    {%
+%        \global\def\theLeft{}% first set to be empty
+%        \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4}}%
+%        \IfNoValueF {#5} {%
+%            \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6}}%
+%        }%
+%        \IfNoValueF {#7} {%
+%            \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6} \sidFourFormat\ltGetColVal{left}{#7}{#8}}%
+%        }%
+%    }%
+%    }%
 }
+
 \DeclareDocumentCommand\ltSidsAppendersCenter{m m m m g g g g } {%
     {%
         \global\def\theCenter{}% first set to be empty
@@ -799,17 +833,6 @@ Script=Arabic%
         \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
     }%
 }
-
-%\newcommand{\ltActorDialogLowVoice}[4]{%
-%    \ifdef{\actorOnSeparateLine}{%
-%        \ltActor{\ltSid{#1}{#2}}%
-%        \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
-%        \ltDialog{\ltSids{rubrical}{InALowVoice}{#3}{#4}}%
-%    }{%
-%        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
-%        \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}%
-%    }%
-%}
 
 \newcommand{\ltActorRubricDialog}[6]{%
     \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
