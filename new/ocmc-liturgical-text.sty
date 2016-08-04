@@ -343,22 +343,24 @@ Script=Arabic%
 %================================================
 % KEY-VALUE RETRIEVAL COMMANDS
 %================================================
+
+
 \newcommand{\setup}[5]{%
-\pgfkeysifdefined{/#1/#2/#3/#4/#5}{%
-        % ignore...good to go
+    \pgfkeysifdefined{/#1/#2/#3/#4/#5}{%
+            % ignore...good to go
     }{%
-    \loadResource{#1}{#2}{#3}{#4}%
-}%
-\loadFont{#1}%
-\itSetPrimaryDomain{#1}{#2}{#3}%
-\IfStrEqCase{#1}{%
-    {ara}{\arabicfont\setRTL}%
-    {chu}{\slavonicfont}%
-    {en}{}%
-    {gr}{}%
-    {heb}{\hebrewfont\setRTL}%
-    {rus}{}%
-}[]%
+        \loadResource{#1}{#2}{#3}{#4}%
+    }%
+    \loadFont{#1}%
+    \itSetPrimaryDomain{#1}{#2}{#3}%
+    \IfStrEqCase{#1}{%
+        {ara}{\arabicfont\setRTL}%
+        {chu}{\slavonicfont}%
+        {en}{}%
+        {gr}{}%
+        {heb}{\hebrewfont\setRTL}%
+        {rus}{}%
+    }[]%
 }
 \newcommand{\ltChapter}[2]{
     \ltGetChapter{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
@@ -646,7 +648,7 @@ Script=Arabic%
 % Global Settings
 %=========================================================
 \setlength{\parindent}{0em} % turns off indenting of paragraphs.  Comment out to turn on.
-\setlength{\parskip}{0.5em}  % spacing between paragraphs 0.5 is usual
+\setlength{\parskip}{1em}  % spacing between paragraphs 0.5 is usual
 \setlength{\JustifyingParindent}{0em} % turns off indenting of paragraphs.  Comment out to turn on.
 \setlength{\JustifyingParfillskip}{0.5em}  % spacing between paragraphs 0.5 is usual
 \setsecnumdepth{none}
@@ -662,19 +664,6 @@ Script=Arabic%
 \usepackage{lineno}%
 \linenumbers%
 }
-
-\newcommand{\ltMulti}{
-    {\IfStrEqCase{\pgfkeysvalueof{\my/current/cols}}{%
-    {1}{%  output one column
-        }%
-    {2}{% output two columns
-        }%
-    {3}{% output three columns
-        }%
-}[]%
-}%
-}
-
 
 %================================================
 % SID APPENDERS for each COLUMN
@@ -755,43 +744,42 @@ Script=Arabic%
             }%
         }%
     }%
-%    {%
-%        \global\def\theLeft{}% first set to be empty
-%        \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4}}%
-%        \IfNoValueF {#5} {%
-%            \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6}}%
-%        }%
-%        \IfNoValueF {#7} {%
-%            \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6} \sidFourFormat\ltGetColVal{left}{#7}{#8}}%
-%        }%
-%    }%
-%    }%
 }
 
 \DeclareDocumentCommand\ltSidsAppendersCenter{m m m m g g g g } {%
-    {%
-        \global\def\theCenter{}% first set to be empty
-        \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4}}%
-        \IfNoValueF {#5} {%
+    \global\def\theCenter{}% first set to be empty
+    \IfValueTF{#7}{%
+        \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidThreeFormat\ltGetColVal{center}{#5}{#6} \sidFourFormat\ltGetColVal{center}{#7}{#8}}%
+    }{%
+        \IfValueTF{#5}{%
             \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidThreeFormat\ltGetColVal{center}{#5}{#6}}%
-        }%
-        \IfNoValueF {#7} {%
-            \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidThreeFormat\ltGetColVal{center}{#5}{#6} \sidFourFormat\ltGetColVal{center}{#7}{#8}}%
+        }{%
+            \IfValueTF{#3}{%
+                \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4}}%
+            }{%
+                \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2}}%
+            }%
         }%
     }%
 }
+
 \DeclareDocumentCommand\ltSidsAppendersRight{m m m m g g g g } {%
-    {%
-        \global\def\theRight{}% first set to be empty
-        \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4}}%
-        \IfNoValueF {#5} {%
+    \global\def\theRight{}% first set to be empty
+    \IfValueTF{#7}{%
+        \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidThreeFormat\ltGetColVal{right}{#5}{#6} \sidFourFormat\ltGetColVal{right}{#7}{#8}}%
+    }{%
+        \IfValueTF{#5}{%
             \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidThreeFormat\ltGetColVal{right}{#5}{#6}}%
-        }%
-        \IfNoValueF {#7} {%
-            \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidThreeFormat\ltGetColVal{right}{#5}{#6} \sidFourFormat\ltGetColVal{right}{#7}{#8}}%
+        }{%
+            \IfValueTF{#3}{%
+                \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4}}%
+            }{%
+                \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2}}%
+            }%
         }%
     }%
 }
+
 % sets the multiple sid format to be empty
 \newcommand{\ltSidsFormatReset}{%
     \global\def\sidOneFormat{}%
@@ -833,6 +821,29 @@ Script=Arabic%
         \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
     }%
 }
+\DeclareDocumentCommand\ltActorDialogAloud{ m m m m g g }{%
+    \ifdef{\actorOnSeparateLine}{%
+        \ltActor{\ltSid{#1}{#2}}%
+        
+        \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
+        \ltDialog{\ltSids{rubrical}{Aloud}{#3}{#4}{#5}{#6}}%
+    }{%
+        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
+        \ltSids{#1}{#2.colon}{rubrical}{Aloud}{#3}{#4}{#5}{#6}%
+    }%
+}
+% Only supports one topic-key for the Dialog
+\DeclareDocumentCommand\ltActorDialogLowVoiceRubric{ m m m m m m }{%
+    \ifdef{\actorOnSeparateLine}{%
+        \ltActor{\ltSid{#1}{#2}}%
+        
+        \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
+        \ltDialog{\ltSids{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}}%
+    }{%
+        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
+        \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
+    }%
+}
 
 \newcommand{\ltActorRubricDialog}[6]{%
     \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
@@ -847,9 +858,24 @@ Script=Arabic%
     }%
 }
 
+\newcommand{\ltRubricDialog}[4]{%
+    \ltSidsFormat{\ltTextRed}{\ltTextBlack}
+    \ltSids{#1}{#2}{#3}{#4}%
+}
+
+\newcommand{\ltRubricDialogRubric}[6]{%
+    \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
+    \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
+}
+
 \newcommand{\ltDialogAloud}[2]{%
     \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
     \ltSids{rubrical}{Aloud}{#1}{#2}%
+}
+
+\newcommand{\ltDialogLowVoice}[2]{%
+    \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
+    \ltSids{rubrical}{InALowVoice}{#1}{#2}%
 }
 
 \newcommand{\ltActorDialogRubric}[6]{%
@@ -893,11 +919,23 @@ Script=Arabic%
     \ifdef{\actorOnSeparateLine}{%
         \ltActor{\ltSid{#1}{#2}}%
         
-        \ltDialog{\ltSid{#3}{#4}}%
+        \ltHymn{\ltSid{#3}{#4}}%
     }{%
-        \ltSids{#1}{#2.colon}{#3}{#4}%
+        \ltHymn{\ltSids{#1}{#2.colon}{#3}{#4}}%
     }%
 }
+
+\newcommand{\ltActorReading}[4]{%
+    \ltSidsFormat{\ltTextRed}{\ltTextBlack}
+    \ifdef{\actorOnSeparateLine}{%
+        \ltActor{\ltSid{#1}{#2}}%
+        
+        \ltReading{\ltSid{#3}{#4}}%
+    }{%
+        \ltReading{\ltSids{#1}{#2.colon}{#3}{#4}}%
+    }%
+}
+
 \newcommand{\ltActorRubricHymn}[6]{%
     \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
     \ifdef{\actorOnSeparateLine}{%
