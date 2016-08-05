@@ -527,7 +527,11 @@ Script=Arabic%
 #1%
 }%
 \newcommand\ltCover[1]{\ltSetTypeographyDefault\huge{#1}}%
-\newcommand\ltDesignation[1]{\ltSetTypeography{\ltTextRed}#1\ltSetTypeographyDefault}%
+
+\DeclareDocumentCommand\ltDesignation{ m m g g g g g g}{%
+    \ltSidsFormat{\ltTextRedItalics}{\ltTextRedItalics}{\ltTextRedItalics}{\ltTextRedItalics}%
+    \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+}
 
 \newcommand\ltDialog[1]{%
 \ltSetTypeographyDefault{%
@@ -553,33 +557,38 @@ Script=Arabic%
     }%
 }%
 
-%\newcommand\ltHymn[1]{%
-%\ltSetTypeographyDefault{%
-%}%
-%#1%
-%}%
-
 \DeclareDocumentCommand\ltHymn{ m m g g g g g g}{%
-    \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextRed}{\ltTextRed}%
+    \ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}%
     \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
 }
 
+\DeclareDocumentCommand\ltHymnLastLine{ m m g g g g g g}{%
+    \ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}%
+    \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+}
 
-\newcommand\ltHymnlinelast[1]{\ltSetTypeographyDefault{}#1}%
 \newcommand\ltInaudible[1]{\ltSetTypeographyDefault{}#1}%
 \newcommand\ltTitle[1]{\ltSetTypeographyDefault{}#1}
 \newcommand\ltMelody[1]{\ltSetTypeographyDefault{}#1}
 \newcommand\ltMixed[1]{\ltSetTypeographyDefault{}#1}
 \newcommand\ltMode[1]{\ltSetTypeographyDefault{}#1}
-\newcommand\ltReading[1]{\ltSetTypeographyDefault{}#1}
+
+\DeclareDocumentCommand\ltReading{ m m g g g g g g}{%
+    \ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}%
+    \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+}
+
 \newcommand\ltRed[1]{%
 \ltSetTypeography{%
 \ltColor{red}%
 }%
 #1%
 }%
-%\newcommand\ltRubric[1]{\ltSetTypeography{\ltColor{red}}#1}%
-\newcommand\ltVerse[1]{\ltSetTypeographyDefault{}#1}
+
+\DeclareDocumentCommand\ltVerse{ m m g g g g g g}{%
+    \ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}%
+    \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+}
 
 
 
@@ -956,9 +965,9 @@ Script=Arabic%
     \ifdef{\actorOnSeparateLine}{%
         \ltActor{\ltSid{#1}{#2}}%
         
-        \ltReading{\ltSid{#3}{#4}}%
+        \ltReading{#3}{#4}%
     }{%
-        \ltReading{\ltSids{#1}{#2.colon}{#3}{#4}}%
+        \ltReading{#1}{#2.colon}{#3}{#4}%
     }%
 }
 
