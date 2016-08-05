@@ -821,6 +821,14 @@ Script=Arabic%
         \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
     }%
 }
+\DeclareDocumentCommand\ltRubricDialogLowVoice{ m m m m g g }{%
+    \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
+    \ltSids{#1}{#2}{rubrical}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
+}
+\DeclareDocumentCommand\ltRubricDialogAloud{ m m m m g g }{%
+    \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
+    \ltSids{#1}{#2}{rubrical}{Aloud.colon}{#3}{#4}{#5}{#6}%
+}
 \DeclareDocumentCommand\ltActorDialogAloud{ m m m m g g }{%
     \ifdef{\actorOnSeparateLine}{%
         \ltActor{\ltSid{#1}{#2}}%
@@ -829,7 +837,7 @@ Script=Arabic%
         \ltDialog{\ltSids{rubrical}{Aloud}{#3}{#4}{#5}{#6}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
-        \ltSids{#1}{#2.colon}{rubrical}{Aloud}{#3}{#4}{#5}{#6}%
+        \ltSids{#1}{#2}{actors}{Aloud.colon}{#3}{#4}{#5}{#6}%
     }%
 }
 % Only supports one topic-key for the Dialog
@@ -841,7 +849,7 @@ Script=Arabic%
         \ltDialog{\ltSids{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
-        \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
+        \ltSids{#1}{#2}{actors}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
     }%
 }
 
@@ -972,6 +980,42 @@ Script=Arabic%
     }%
 }
 
+\DeclareDocumentCommand\ltHymnRubric{m m m m g g g g} {%
+    \ltSidsFormatReset%
+    {\global\def\sidOneFormat{#1}%
+        \IfValueTF {#7}{%
+            \ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}{\ltTextRed}%
+            \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+        }{%
+            \IfValueTF {#5}{%
+            \ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextRed}%
+            \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
+            }{%
+            \ltSidsFormat{\ltTextBlack}{\ltTextRed}%
+            \ltSids{#1}{#2}{#3}{#4}%
+            }%
+        }%
+    }%
+    \ltSidsFormatReset%
+}
+\DeclareDocumentCommand\ltRubricHymn{m m m m g g g g} {%
+    \ltSidsFormatReset%
+    {\global\def\sidOneFormat{#1}%
+        \IfValueTF {#7}{%
+            \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextBlack}{\ltTextBlack}%
+            \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+        }{%
+            \IfValueTF {#5}{%
+            \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextBlack}%
+            \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
+            }{%
+            \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
+            \ltSids{#1}{#2}{#3}{#4}%
+            }%
+        }%
+    }%
+    \ltSidsFormatReset%
+}
 \DeclareDocumentCommand\ltStichos{m m m m g g g g} {%
     \ltSidsFormatReset%
     {\global\def\sidOneFormat{#1}%
