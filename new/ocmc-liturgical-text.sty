@@ -553,11 +553,14 @@ Script=Arabic%
     }%
 }%
 
-\newcommand\ltHymn[1]{%
-\ltSetTypeographyDefault{%
-}%
-#1%
-}%
+%\newcommand\ltHymn[1]{%
+%\ltSetTypeographyDefault{%
+%}%
+%#1%
+%}%
+
+
+
 \newcommand\ltHymnlinelast[1]{\ltSetTypeographyDefault{}#1}%
 \newcommand\ltInaudible[1]{\ltSetTypeographyDefault{}#1}%
 \newcommand\ltTitle[1]{\ltSetTypeographyDefault{}#1}
@@ -571,7 +574,7 @@ Script=Arabic%
 }%
 #1%
 }%
-\newcommand\ltRubric[1]{\ltSetTypeography{\ltColor{red}}#1}%
+%\newcommand\ltRubric[1]{\ltSetTypeography{\ltColor{red}}#1}%
 \newcommand\ltVerse[1]{\ltSetTypeographyDefault{}#1}
 
 
@@ -821,6 +824,11 @@ Script=Arabic%
         \ltSids{#1}{#2}{actors}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
     }%
 }
+\DeclareDocumentCommand\ltRubric{ m m g g g g g g}{%
+    \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextRed}{\ltTextRed}%
+    \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+}
+
 \DeclareDocumentCommand\ltRubricDialogLowVoice{ m m m m g g }{%
     \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
     \ltSids{#1}{#2}{rubrical}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
