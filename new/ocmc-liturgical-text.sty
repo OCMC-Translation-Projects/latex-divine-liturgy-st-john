@@ -613,19 +613,19 @@ Script=Arabic%
 % if the topic is actors and we are not putting the actor on
 % a separate line, it gets the colon version
 \newcommand\ltGetColVal[3]{%
-    \IfStrEq{#2}{actors}{%
-        \ifdef{\actorOnSeparateLine}{%
-            \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
-        }{%
-            \IfEndWith{#3}{colon}{%
-                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
-            }{%
-                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3.colon}%                
-            }%
-        }%
-    }{%
+%    \IfStrEq{#2}{actors}{%
+%        \ifdef{\actorOnSeparateLine}{%
+%            \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
+%        }{%
+%            \IfEndWith{#3}{colon}{%
+%                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
+%            }{%
+%                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3.colon}%                
+%            }%
+%        }%
+%    }{%
         \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
-    }%
+%    }%
 }%
 
 \newcommand{\ltGetLanguage}[1]{%
@@ -814,11 +814,11 @@ Script=Arabic%
     \ifdef{\actorOnSeparateLine}{%
         \ltActor{\ltSid{#1}{#2}}%
         
-        \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
+        \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextBlack}%
         \ltDialog{\ltSids{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}}%
     }{%
-        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
-        \ltSids{#1}{#2.colon}{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
+        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextBlack}%
+        \ltSids{#1}{#2}{actors}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
     }%
 }
 \DeclareDocumentCommand\ltRubricDialogLowVoice{ m m m m g g }{%
@@ -876,6 +876,11 @@ Script=Arabic%
     \ltSids{#1}{#2}{#3}{#4}{#5}{#6}%
 }
 
+\newcommand{\ltRubricDialogRubricDialog}[8]{%
+    \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}{\ltTextBlack}%
+    \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
+}
+
 \newcommand{\ltDialogAloud}[2]{%
     \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
     \ltSids{rubrical}{Aloud}{#1}{#2}%
@@ -909,6 +914,7 @@ Script=Arabic%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}{#7}{#8}%
     }%
 }
+
 \newcommand{\ltActorDialogRubricDialog}[8]{%
     \ifdef{\actorOnSeparateLine}{%
         \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
@@ -967,6 +973,7 @@ Script=Arabic%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}%
     }%
 }
+
 \newcommand{\ltActorRubricHymnRubric}[8]{%
     \ifdef{\actorOnSeparateLine}{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}%
@@ -976,6 +983,19 @@ Script=Arabic%
         \ltDialog{\ltSids{#5}{#6}{#7}{#8}}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
+        \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}{#7}{#8}%
+    }%
+}
+
+\newcommand{\ltActorHymnHymnRubric}[8]{%
+    \ifdef{\actorOnSeparateLine}{%
+        \ltSidsFormat{\ltTextRed}{\ltTextRed}%
+        \ltSids{#1}{#2}{#3}{#4}%
+        
+        \ltSidsFormat{\ltTextBlack}{\ltTextBlack}{\ltTextRed}%
+        \ltDialog{\ltSids{#5}{#6}{#7}{#8}}%
+    }{%
+        \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextBlack}{\ltTextRed}%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}{#7}{#8}%
     }%
 }
