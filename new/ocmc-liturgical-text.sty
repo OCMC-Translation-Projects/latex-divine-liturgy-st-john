@@ -511,7 +511,17 @@ Script=Arabic%
 %================================================
 % LITURGICAL FORMATTING COMMANDS
 %================================================
-\newcommand\asteriskfill{\leavevmode\xleaders\hbox{$\ast$}\hfill\kern0pt}
+\newcommand\ltAsterisksLine{{\small\color{red}\leavevmode\xleaders\hbox{$\ast$}\hfill\kern0pt\normalsize\color{black}\smallbreak}}
+
+% this doesn't quite work yet with multilingual
+\newcommand\ltCommentBox[1]{
+%    \medskip%
+    \noindent\fcolorbox{red}{white}{%
+    \minipage[t]{\dimexpr0.98\linewidth\fboxsep\fboxrule\relax}
+    #1%
+    \endminipage}\hfill%
+%    \medskip%
+}
 
 \newcommand\ltActor[1]{%
     \ltSetTypeography{%
