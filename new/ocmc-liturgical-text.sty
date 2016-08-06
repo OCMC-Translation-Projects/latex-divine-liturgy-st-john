@@ -362,15 +362,34 @@ Script=Arabic%
         {rus}{}%
     }[]%
 }
+
 \newcommand{\ltChapter}[2]{
     \ltGetChapter{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+    \ltChapterSubTitles{#1}{#2}
+}
+
+\newcommand{\ltChapterSubTitles}[2]{%
+\begin{center}
+    {\IfStrEqCase{\pgfkeysvalueof{\my/current/cols}}{%
+        {1}{%  output one column
+        }%
+        {2}{% output two columns
+            \ltGetSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+        }%
+        {3}{% output three columns
+            \ltGetSection{\pgfkeysvalueof{\my/current/center/language}}{\pgfkeysvalueof{\my/current/center/country}}{\pgfkeysvalueof{\my/current/center/realm}}{#1}{#2}%
+            \ltGetSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+        }%
+    }[]%
+    }%
+\end{center}
 }
 
 \newcommand{\ltGetChapter}[5]{%
 \setup{#1}{#2}{#3}{#4}{#5}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
 \ifbool{titleHasAllParts}{%
-\chapter[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
+\chapter[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\centering\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
 \chaptermark{\itSid{#1}{#2}{#3}{#4}{#5.header}}%
 \setLTR%
 }{%
@@ -379,13 +398,42 @@ Script=Arabic%
 }
 
 \newcommand{\ltSection}[2]{
-    \ltGetSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+    {\IfStrEqCase{\pgfkeysvalueof{\my/current/cols}}{%
+        {1}{%  output one column
+        \ltGetSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                }%
+        {2}{% output two columns
+            \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
+            \sloppy%
+            \begin{paracol}{2}%
+            	\begin{leftcolumn}%
+                    \ltGetSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                \end{leftcolumn}%          
+            	\begin{rightcolumn}%
+                    \ltGetSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+                \end{rightcolumn}%          
+            \end{paracol}%
+        }%
+        {3}{% output three columns
+            \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
+            \sloppy%
+            \begin{paracol}{3}%
+                    \ltGetSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                \switchcolumn%
+                    \ltGetSection{\pgfkeysvalueof{\my/current/center/language}}{\pgfkeysvalueof{\my/current/center/country}}{\pgfkeysvalueof{\my/current/center/realm}}{#1}{#2}%
+                \switchcolumn%
+                    \ltGetSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+                \end{paracol}%
+        }%
+    }[]%
+    }%
 }
+
 \newcommand{\ltGetSection}[5]{%
 \setup{#1}{#2}{#3}{#4}{#5}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
 \ifbool{titleHasAllParts}{%
-\section[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
+\section[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\centering\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
 \sectionmark{\itSid{#1}{#2}{#3}{#4}{#5.header}}%
 \setLTR%
 }{%
@@ -394,8 +442,37 @@ Script=Arabic%
 }
 
 \newcommand{\ltSubSection}[2]{
-    \ltGetSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+    {\IfStrEqCase{\pgfkeysvalueof{\my/current/cols}}{%
+        {1}{%  output one column
+        \ltGetSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                }%
+        {2}{% output two columns
+            \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
+            \sloppy%
+            \begin{paracol}{2}%
+            	\begin{leftcolumn}%
+                    \ltGetSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                \end{leftcolumn}%          
+            	\begin{rightcolumn}%
+                    \ltGetSubSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+                \end{rightcolumn}%          
+            \end{paracol}%
+        }%
+        {3}{% output three columns
+            \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
+            \sloppy%
+            \begin{paracol}{3}%
+                    \ltGetSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                \switchcolumn%
+                    \ltGetSubSection{\pgfkeysvalueof{\my/current/center/language}}{\pgfkeysvalueof{\my/current/center/country}}{\pgfkeysvalueof{\my/current/center/realm}}{#1}{#2}%
+                \switchcolumn%
+                    \ltGetSubSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+                \end{paracol}%
+        }%
+    }[]%
+    }%
 }
+
 \newcommand{\ltGetSubSection}[5]{%
 \setup{#1}{#2}{#3}{#4}{#5}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
@@ -409,8 +486,37 @@ Script=Arabic%
 }
 
 \newcommand{\ltSubSubSection}[2]{
-    \ltGetSubSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+    {\IfStrEqCase{\pgfkeysvalueof{\my/current/cols}}{%
+        {1}{%  output one column
+        \ltGetSubSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                }%
+        {2}{% output two columns
+            \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
+            \sloppy%
+            \begin{paracol}{2}%
+            	\begin{leftcolumn}%
+                    \ltGetSubSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                \end{leftcolumn}%          
+            	\begin{rightcolumn}%
+                    \ltGetSubSubSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+                \end{rightcolumn}%          
+            \end{paracol}%
+        }%
+        {3}{% output three columns
+            \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
+            \sloppy%
+            \begin{paracol}{3}%
+                    \ltGetSubSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                \switchcolumn%
+                    \ltGetSubSubSection{\pgfkeysvalueof{\my/current/center/language}}{\pgfkeysvalueof{\my/current/center/country}}{\pgfkeysvalueof{\my/current/center/realm}}{#1}{#2}%
+                \switchcolumn%
+                    \ltGetSubSubSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
+                \end{paracol}%
+        }%
+    }[]%
+    }%
 }
+
 \newcommand{\ltGetSubSubSection}[5]{%
 \setup{#1}{#2}{#3}{#4}{#5}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
@@ -1132,21 +1238,17 @@ Script=Arabic%
         \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
         \sloppy%
         \begin{paracol}{3}%
-        	\begin{leftcolumn}%
 			\ltTypeography{}%
 			#1
             \ltTempTypeographyDefault%
-            \end{leftcolumn}%          
-        	\begin{nthcolumn}{1}%
+            \switchcolumn%
 			\ltTypeography{}%
 			#2
             \ltTempTypeographyDefault%
-            \end{nthcolumn}%          
-        	\begin{rightcolumn}%
+            \switchcolumn%
 			\ltTypeography{}%
 			#3
             \ltTempTypeographyDefault%
-            \end{rightcolumn}%          
         \end{paracol}%
     }%
 }[]%

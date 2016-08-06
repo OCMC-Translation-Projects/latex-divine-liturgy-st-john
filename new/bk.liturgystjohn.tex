@@ -1,8 +1,3 @@
-% TODO
-% 1. Titles
-% 2. chapter / section for multi-lingual
-% 3. convert \ltHymn, \ltDialog, \ltRubric to support multiple parameters
-%
 \documentclass[]{memoir}
 % Base fonts available for memoir are:
 % 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt, 25pt, 
@@ -22,9 +17,6 @@
 \usepackage[]{ocmc-liturgical-text} % includes packages and creates new commands
 \input{control} % control.tex allows you to easily change settings
 \begin{document}
-%	\huge\ltSid{matinsforsunday}{p0001.title.cover}%
-%\ltSid{client}{li.patriarchate.alexandria.title.cover}%
-%\ltSid{matinsforsunday}{p0001.title.cover}
 \begin{titlingpage}
 \openup .5em
 \begin{center}
@@ -37,6 +29,7 @@
 \end{minipage}
 \vfill
 \includegraphics[width=.5\textwidth]{images/icxcnika.jpg}
+
 \ltSid{client}{li.patriarchate.alexandria.title.cover}
 \end{center}
 
@@ -53,12 +46,12 @@
 
 \mainmatter
 
-\ltSetNumberColumns{2}
+\ltSetNumberColumns{3}
 \ltSetPrimaryDomain{gr}{gr}{cog}
+\ltSetCenterDomain{en}{uk}{lash}
 \ltSetRightDomain{en}{uk}{lash}
 
-\huge
-
+%\huge
 \input{tmp.liturgystjohn}
  
 \vfill
