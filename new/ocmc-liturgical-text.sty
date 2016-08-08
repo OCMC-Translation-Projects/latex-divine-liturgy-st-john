@@ -34,6 +34,12 @@
 \DeclareOption{debug}{%
     \booltrue{debugKeys}%
 }
+%% clear babel option
+\newbool{clearbabel}%
+\boolfalse{clearbabel}%
+\DeclareOption{clearbabel}{%
+    \booltrue{clearbabel}%
+}
 %% hyphenation option
 \newbool{hyphenate}%
 \boolfalse{hyphenate}%
@@ -396,7 +402,7 @@ Script=Arabic%
 }
 
 \newcommand{\ltGetChapter}[5]{%
-\setup{#1}{#2}{#3}{#4}{#5}%
+\setup{#1}{#2}{#3}{#4}{#5.doc}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
 \ifbool{titleHasAllParts}{%
 \chapter[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\centering\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
@@ -440,7 +446,7 @@ Script=Arabic%
 }
 
 \newcommand{\ltGetSection}[5]{%
-\setup{#1}{#2}{#3}{#4}{#5}%
+\setup{#1}{#2}{#3}{#4}{#5.doc}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
 \ifbool{titleHasAllParts}{%
 \section[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\centering\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
@@ -484,7 +490,7 @@ Script=Arabic%
 }
 
 \newcommand{\ltGetSubSection}[5]{%
-\setup{#1}{#2}{#3}{#4}{#5}%
+\setup{#1}{#2}{#3}{#4}{#5.doc}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
 \ifbool{titleHasAllParts}{%
 \subsection[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
@@ -528,7 +534,7 @@ Script=Arabic%
 }
 
 \newcommand{\ltGetSubSubSection}[5]{%
-\setup{#1}{#2}{#3}{#4}{#5}%
+\setup{#1}{#2}{#3}{#4}{#5.doc}%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
 \ifbool{titleHasAllParts}{%
 \subsubsection[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
@@ -540,7 +546,7 @@ Script=Arabic%
 }
 
 \newcommand{\ltGetTitle}[6]{
-\setup{#1}{#2}{#3}{#4}{#5}%
+\setup{#1}{#2}{#3}{#4}{#5.doc}%
 \pgfkeysifdefined{/#1/#2/#3/#4/#5.doc}{%
 \expandafter{\csname #6\endcsname}[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
 \expandafter{\csname #6mark\endcsname}{\itSid{#1}{#2}{#3}{#4}{#5.header}}%
@@ -772,19 +778,7 @@ Script=Arabic%
 % if the topic is actors and we are not putting the actor on
 % a separate line, it gets the colon version
 \newcommand\ltGetColVal[3]{%
-%    \IfStrEq{#2}{actors}{%
-%        \ifdef{\actorOnSeparateLine}{%
-%            \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
-%        }{%
-%            \IfEndWith{#3}{colon}{%
-%                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
-%            }{%
-%                \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3.colon}%                
-%            }%
-%        }%
-%    }{%
-        \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
-%    }%
+    \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
 }%
 
 \newcommand{\ltGetLanguage}[1]{%
@@ -974,7 +968,7 @@ Script=Arabic%
         \ltActor{\ltSid{#1}{#2}}%
         
         \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextBlack}%
-        \ltDialogNoFormat{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
+        \ltDialogNoFormat{actors}{InALowVoice}{#3}{#4}{#5}{#6}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextBlack}%
         \ltSids{#1}{#2}{actors}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
@@ -987,18 +981,18 @@ Script=Arabic%
 
 \DeclareDocumentCommand\ltRubricDialogLowVoice{ m m m m g g }{%
     \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
-    \ltSids{#1}{#2}{rubrical}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
+    \ltSids{#1}{#2}{actors}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
 }
 \DeclareDocumentCommand\ltRubricDialogAloud{ m m m m g g }{%
     \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
-    \ltSids{#1}{#2}{rubrical}{Aloud.colon}{#3}{#4}{#5}{#6}%
+    \ltSids{#1}{#2}{actors}{Aloud.colon}{#3}{#4}{#5}{#6}%
 }
 \DeclareDocumentCommand\ltActorDialogAloud{ m m m m g g }{%
     \ifdef{\actorOnSeparateLine}{%
         \ltActor{\ltSid{#1}{#2}}%
         
         \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
-        \ltDialogNoFormat{rubrical}{Aloud}{#3}{#4}{#5}{#6}%
+        \ltDialogNoFormat{actors}{Aloud}{#3}{#4}{#5}{#6}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
         \ltSids{#1}{#2}{actors}{Aloud.colon}{#3}{#4}{#5}{#6}%
@@ -1010,7 +1004,7 @@ Script=Arabic%
         \ltActor{\ltSid{#1}{#2}}%
         
         \ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
-        \ltDialogNoFormat{rubrical}{InALowVoice}{#3}{#4}{#5}{#6}%
+        \ltDialogNoFormat{actors}{InALowVoice}{#3}{#4}{#5}{#6}%
     }{%
         \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}{\ltTextRed}%
         \ltSids{#1}{#2}{actors}{InALowVoice.colon}{#3}{#4}{#5}{#6}%
@@ -1025,7 +1019,7 @@ Script=Arabic%
         
         \ltDialogNoFormat{#5}{#6}%
     }{%
-        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}
+        \ltSidsFormat{\ltTextRed}{\ltTextRed}{\ltTextBlack}%
         \ltSids{#1}{#2.colon}{#3}{#4}{#5}{#6}%
     }%
 }
@@ -1047,12 +1041,12 @@ Script=Arabic%
 
 \newcommand{\ltDialogAloud}[2]{%
     \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
-    \ltSids{rubrical}{Aloud}{#1}{#2}%
+    \ltSids{actors}{Aloud}{#1}{#2}%
 }
 
 \newcommand{\ltDialogLowVoice}[2]{%
     \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
-    \ltSids{rubrical}{InALowVoice}{#1}{#2}%
+    \ltSids{actors}{InALowVoice}{#1}{#2}%
 }
 
 \newcommand{\ltActorDialogRubric}[6]{%
@@ -1267,6 +1261,9 @@ Script=Arabic%
 
 % load last of all
 \ifbool{hyphenate}{%
+\usepackage[english,greek]{babel}%
+}{}%
+\ifbool{clearbabel}{%
 \usepackage[english,greek]{babel}%
 }{}%
 \endinput
