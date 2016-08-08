@@ -34,6 +34,12 @@
 \DeclareOption{debug}{%
     \booltrue{debugKeys}%
 }
+%% hyphenation option
+\newbool{hyphenate}%
+\boolfalse{hyphenate}%
+\DeclareOption{hyphenate}{%
+    \booltrue{hyphenate}%
+}
 %% Show realm option
 \newbool{showRealm}%
 \boolfalse{showRealm}%
@@ -356,8 +362,12 @@ Script=Arabic%
     \IfStrEqCase{#1}{%
         {ara}{\arabicfont\setRTL}%
         {chu}{\slavonicfont}%
-        {en}{}%
-        {gr}{}%
+        {en}{%
+            \ifbool{hyphenate}{\selectlanguage{english}}{}
+        }%
+        {gr}{%
+            \ifbool{hyphenate}{\selectlanguage{greek}}{}%        
+        }%
         {heb}{\hebrewfont\setRTL}%
         {rus}{}%
     }[]%
@@ -1255,5 +1265,9 @@ Script=Arabic%
 }%
 }
 
+% load last of all
+\ifbool{hyphenate}{%
+\usepackage[english,greek]{babel}%
+}{}%
 \endinput
 

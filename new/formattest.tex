@@ -1,38 +1,19 @@
-% use this template to test formatting after making changes to ocmc-liturgical-text.sty
-\documentclass[]{memoir}
-\usepackage[]{ocmc-liturgical-text} % includes packages and creates new commands
-\input{control} % control.tex allows you to easily change settings
-%====================================================
-% PROTOTYPE COMMANDS
+\ltChapter{pub.priest.servicebook}{li.liturgy.title}
 
-%====================================================
-\begin{document}
+\ltSection{pub.priest.servicebook}{li.liturgycatechumens.title}
 
-\ltSetNumberColumns{2}
-\ltSetPrimaryDomain{gr}{gr}{cog}
-\ltSetRightDomain{en}{uk}{lash}
+\ltRubricDialog{pub.priest.servicebook}{li.rubric.liturgy.deacon.start}{pub.priest.servicebook}{li.bless}
 
-%\def\actorOnSeparateLine{}
+\ltRubricDialog{pub.priest.servicebook}{li.rubric.beginliturgy}{prayers}{enarxis02}
 
-% this won't work when do actor on same line
-% instead use \ltActorWithFirstDialog
-%\ltActor{\ltSid{actors}{Priest}}
-%\ltDialog{\ltSid{prayers}{res04}}
+\ltActorDialog{actors}{People}{prayers}{res04}
 
-%\ltSidsFormat{}{\ltTextRed}{\ltTextBlack}{\ltTextRed}
-%\ltSids{actors}{Priest}{actors}{Deacon}{actors}{People}{actors}{Choir}
+\ltSubSection{pub.priest.servicebook}{li.litanypeace.title}
 
-%\ltActorWithFirstDialog{actors}{Deacon}{prayers}{res04}{rubrical}{Aloud}
+\ltActorDialog{actors}{Deacon}{prayers}{pet01} 
 
-%\ltActorWithFirstDialog{actors}{Deacon}{prayers}{res04}
+\ltActorDialogRubric{actors}{People}{prayers}{res01}{pub.priest.servicebook}{li.rubric.eachpetition} 
 
-%\ltSidsFormat{\ltTextRed}{\ltTextBlack}{\ltTextRed}
-%\ltDialog{\ltSids{misc}{vVerse3}{ps}{psa102.v19.text}{ps}{psa102.v19.number}}
+\ltActorDialog{actors}{Deacon}{prayers}{pet02} 
 
-\ltActorDialog{actors}{Deacon}{prayers}{res04}
-\ltActorRubricDialog{actors}{Deacon}{rubrical}{Aloud}{prayers}{res04}
-\ltActorDialogRubric{actors}{Deacon}{prayers}{res04}{pub.priest.servicebook}{li.rubric.eachpetition}
-\ltActorRubricDialogRubric{actors}{Deacon}{rubrical}{Aloud}{prayers}{res04}{pub.priest.servicebook}{li.rubric.eachpetition}
-
-
-\end{document}
+\ltDialog{prayers}{pet03}

@@ -14,9 +14,19 @@
 % spill outside the margin when doing bilingual text.  This problem will exist until I figure out
 % how to get hyphenation to work for Greek.
 %
-\usepackage[]{ocmc-liturgical-text} % includes packages and creates new commands
+\usepackage[hyphenate]{ocmc-liturgical-text} % includes packages and creates new commands
 \input{control} % control.tex allows you to easily change settings
+
+%\usepackage[english,greek]{babel}%
+
 \begin{document}
+
+\ltSetPrimaryDomain{gr}{gr}{cog}
+\ltSetCenterDomain{en}{uk}{lash}
+\ltSetRightDomain{en}{uk}{lash}
+
+%\input{resources/en_uk_lash/res.liturgy}
+
 \begin{titlingpage}
 \openup .5em
 \begin{center}
@@ -46,13 +56,12 @@
 
 \mainmatter
 
-\ltSetNumberColumns{3}
-\ltSetPrimaryDomain{gr}{gr}{cog}
-\ltSetCenterDomain{en}{uk}{lash}
-\ltSetRightDomain{en}{uk}{lash}
+\ltSetNumberColumns{2}
 
-%\huge
-\input{tmp.liturgystjohn}
+\huge
+
+\input{formattest}
+%\input{tmp.liturgystjohn}
  
 \vfill
 
