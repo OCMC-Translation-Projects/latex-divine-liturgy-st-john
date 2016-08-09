@@ -369,7 +369,7 @@ Script=Arabic%
         {ara}{\arabicfont\setRTL}%
         {chu}{\slavonicfont}%
         {en}{%
-            \ifbool{hyphenate}{\selectlanguage{english}}{}
+            \ifbool{hyphenate}{\selectlanguage{english}}{}%
         }%
         {gr}{%
             \ifbool{hyphenate}{\selectlanguage{greek}}{}%        
@@ -646,10 +646,7 @@ Script=Arabic%
 }
 
 \newcommand\ltActor[1]{%
-    \ltSetTypeography{%
-    \ltTextRed%
-    }%
-    #1%
+    \ltTextRed#1\ltTextBlack%
 }
 
 \newcommand\ltBlack[1]{%
@@ -812,11 +809,6 @@ Script=Arabic%
 \makeoddhead{ruled}{\thepage}{\leftmark}{}
 \makeevenfoot{ruled}{}{}{}
 \makeoddfoot{ruled}{}{}{}
-
-\ifdef{\showLineNumbers}{%
-\usepackage{lineno}%
-\linenumbers%
-}
 
 %================================================
 % SID APPENDERS for each COLUMN
@@ -1261,10 +1253,18 @@ Script=Arabic%
 
 % load last of all
 \ifbool{hyphenate}{%
-\usepackage[english,greek]{babel}%
+\usepackage[main=english,greek]{babel}%
 }{}%
 \ifbool{clearbabel}{%
-\usepackage[english,greek]{babel}%
+\usepackage[main=english,greek]{babel}%
 }{}%
+
+\newcommand\ltDebugOn{%
+\itDebugOn{}
+}
+\newcommand\ltDebugOff{%
+\itDebugOff{}
+}
+
 \endinput
 

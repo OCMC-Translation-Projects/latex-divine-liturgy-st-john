@@ -1,29 +1,8 @@
 % Author: Michael Colburn
 % Purpose: controls various options for typesetting liturgical text
 
-\ltSetPrimaryDomain{en}{uk}{lash}
-\def\theTitle{\ltSid{matinsforsunday}{p0001.title.cover}}
-%\def\showKeys{}
-%\def\showLineNumbers{}
-%\def\supportAsian{}
-%==================================================
-% Show keys?
-%
-% Controls whether the PDF will display the key used to retrieve the
-% text.
-%
-%\def\showKeys{} % comment out to NOT display keys
-% 
-%==================================================
-
-%==================================================
-% Show line numbers?
-%
-% Controls whether the PDF will a number for each line.
-%
-\def\showLineNumbers{} % comment out to NOT display numbers
-% 
-%==================================================
+%\ltSetPrimaryDomain{en}{uk}{lash}
+%\def\theTitle{\ltSid{matinsforsunday}{p0001.title.cover}}
 
 %==================================================
 % Actors on separate line?
@@ -43,46 +22,66 @@
 %==================================================
 
 %==================================================
-% One language or two?
-% 
-% Controls whether we will have one language (monolingual)
-% or two languages (bilingual)
-% Bilingual text is typeset as two columns on each page.
-%
-%\newcommand*{\createbilingual}{} % comment out to do monolingual
-%
-%==================================================
-
-%==================================================
-% the name of the directory contain the language tex files
-\def\ltResourceDir{resources/}
-% 
-%==================================================
-
-%==================================================
-% languages
-\def\ltLeftMain{gr_gr_cog}
-%\def\ltLeftMain{ko_kr_omok}
-\def\ltLeftAlt{en_KE_oak}
-\def\ltLeftLextionaryMain{en_US_rsv}
-\def\ltLeftLextionaryAlt{en_US_saas}
-% 
-%==================================================
-
-%==================================================
 % Which language or languages?
 % 
 % Controls language or languages to use.
 % Each language must have a folder with that name.
-% If you are typesetting just one language (monolingual)
-% then comment out the \def\langRight
 %
-\def\langLeft{\ltLeftMain} % if monolingual, only this language will be used
-\def\langRight{gr_gr_cog} 
-%
-%==================================================
+% Examples
+% 1. Greek and English
+%\ltSetPrimaryDomain{gr}{gr}{cog}
+%\ltSetRightDomain{en}{uk}{lash}
+%\input{resources/gr_gr_cog/res.liturgystjohn}
+%\input{resources/en_uk_lash/res.liturgystjohn}
 
-%avoid overfull hbox with narrow columns
+% 2. Greek and Albanian
+%\ltSetPrimaryDomain{gr}{gr}{cog}
+%\input{resources/gr_gr_cog/res.liturgystjohn}
+%\ltSetRightDomain{sqi}{alb}{koas}
+%\input{resources/sqi_alb_koas/res.liturgystjohn}
+
+% 3. Greek, English, and Albanian
+\ltSetPrimaryDomain{gr}{gr}{cog}
+\input{resources/gr_gr_cog/res.liturgystjohn}
+\ltSetCenterDomain{en}{uk}{lash}
+\input{resources/en_uk_lash/res.liturgystjohn}
+\ltSetRightDomain{sqi}{alb}{koas}
+\input{resources/sqi_alb_koas/res.liturgystjohn}
+
+% 4. English, Swahili, and Kikuyu
+%\ltSetPrimaryDomain{en}{uk}{lash}
+%\input{resources/en_uk_lash/res.liturgystjohn}
+%\ltSetCenterDomain{shw}{ke}{oak}
+%\input{resources/shw_ke_oak/res.liturgystjohn}
+%\ltSetRightDomain{kik}{ke}{oak}
+%\input{resources/kik_ke_oak/res.liturgystjohn}
+%==================================================
+%=========================================================
+% Global Settings
+%=========================================================
+% set page margin:
+\geometry{margin=1in} % see package geometry for options
+% set paragraph indent.  
+\setlength{\parindent}{0em}
+\setlength{\JustifyingParindent}{0em}
+% set spacing between paragraphs.  0.5em is usual
+\setlength{\parskip}{1em}
+\setlength{\JustifyingParfillskip}{1em}
+
+% memoir package settings
+\setsecnumdepth{none}
+\maxsecnumdepth{none}
+\titleformat{\section}[block]{\color{blue}\Large\bfseries\filcenter}{}{0.5em}{}
+\pagestyle{ruled}
+
+% header and footer settings
+\makeevenhead{ruled}{}{\rightmark}{\thepage}
+\makeoddhead{ruled}{\thepage}{\leftmark}{}
+\makeevenfoot{ruled}{}{}{}
+\makeoddfoot{ruled}{}{}{}
+
+% to help with avoiding overfull 
+% hbox with narrow columns:
 \tolerance=400      
 \hbadness=399   
 \setlength{\emergencystretch}{1em}

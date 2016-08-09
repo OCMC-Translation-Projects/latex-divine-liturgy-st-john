@@ -80,7 +80,7 @@ false
 \newcommand{\itSid}[5]{% value from ID
 \pgfkeysifdefined{/#1/#2/#3/#4/#5}{\pgfkeysvalueof{/#1/#2/#3/#4/#5}}{\pgfkeys{/#1/#2/#3/#4/#5}}%
 \ifbool{showresourceid}{%
-\emph{\color{blue}{  Primary key: / #1 /#2 /#3 /#4 /#5}}%
+\emph{\color{blue}{\newline from: #1 #2 #3\newline#4\newline#5\newline}}%
 }{% else
 }%
 }
@@ -88,9 +88,17 @@ false
 \newcommand{\itRid}[2]{%
 \pgfkeysifdefined{\itPrimaryDomain/#1/#2}{\pgfkeysvalueof{\itPrimaryDomain/#1/#2}}{\pgfkeys{\itPrimaryDomain/#1/#2}}%
 \ifbool{showresourceid}{%
-\emph{\color{red}{  Primary key: \itPrimaryDomain/ #1/ #2/}}%
+\emph{\color{red}{\newline from: \itPrimaryDomain\newline#1\newline #2\newline}}%
 }{% else
 }%
 }
+
+\newcommand\itDebugOn{%
+\booltrue{showresourceid}
+}
+\newcommand\itDebugOff{%
+\boolfalse{showresourceid}
+}
+
 
 \endinput

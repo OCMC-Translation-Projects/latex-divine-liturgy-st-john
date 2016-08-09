@@ -1,7 +1,10 @@
-\documentclass[]{memoir}
+\documentclass[extrafontsizes,14pt]{memoir}
 % Base fonts available for memoir are:
 % 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt, 25pt, 
 % 30pt, 36pt, 48pt and 60pt
+% When using fonts larger than 12, you also
+% have to
+%, e.g. \documentclass[extrafontsizes,20pt]{memoir}
 %
 % The best font size for a printed service book used by the clergy is 14.
 % For a printed service book used by the people, set it to 11 or 12.
@@ -10,25 +13,16 @@
 %
 % Note: keys must not have an underscore _ as part of the value.
 %
-% Issue: when using a font size greater than 12pt, the Greek might
-% spill outside the margin when doing bilingual text.  This problem will exist until I figure out
-% how to get hyphenation to work for Greek.
 %
 \usepackage[hyphenate]{ocmc-liturgical-text} % includes packages and creates new commands
 \input{control} % control.tex allows you to easily change settings
 
 \begin{document}
 
-\ltSetPrimaryDomain{gr}{gr}{cog}
-\ltSetCenterDomain{en}{uk}{lash}
-\input{resources/en_uk_lash/res.liturgy}
-\ltSetRightDomain{en}{uk}{lash}
-
-
 \begin{titlingpage}
 \openup .5em
 \begin{center}
-\vspace*{12\baselineskip}
+\vspace*{6\baselineskip}
 \begin{minipage}{25em}
 \begin{center}
 \linespread{2}
@@ -38,7 +32,7 @@
 \vfill
 \includegraphics[width=.5\textwidth]{images/icxcnika.jpg}
 
-\ltSid{client}{li.patriarchate.alexandria.title.cover}
+\ltSid{client}{li.hierarchical.sponsor.title.cover}
 \end{center}
 
 \end{titlingpage}
@@ -54,10 +48,9 @@
 
 \mainmatter
 
-\ltSetNumberColumns{2}
+\ltSetNumberColumns{3}
 
-\huge
-
+%\huge
 %\input{formattest}
 \input{tmp.liturgystjohn}
  
