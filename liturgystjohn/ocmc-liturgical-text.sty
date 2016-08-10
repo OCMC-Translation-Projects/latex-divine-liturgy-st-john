@@ -259,6 +259,9 @@ addtohook={%
 \newbool{haveRightDomain}%
 \boolfalse{haveRightDomain}%
 
+\newbool{blessed}
+\boolfalse{blessed}
+
 %================================================
 % RESOURCE LOADING
 %================================================
@@ -411,6 +414,20 @@ Script=Arabic%
 
 \newcommand{\ltCopyRight}{%
 \input{\ltSystemPath/copyright}%
+}
+
+\newcommand{\ltBlessing}{%
+    \IfFileExists{\ltSystemPath/blessing}{%
+        \input{\ltSystemPath/blessing}%
+    }{% false
+    }%
+}
+
+\newcommand{\ltPreface}{%
+    \IfFileExists{\ltClientPath/preface}{%
+        \input{\ltClientPath/preface}%
+    }{% false
+    }%
 }
 
 \newcommand{\ltCover}{%
