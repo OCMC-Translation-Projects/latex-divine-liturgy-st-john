@@ -1,9 +1,11 @@
 % Author: Michael Colburn
 % Purpose: controls various options for typesetting liturgical text
 
-%\ltSetPrimaryDomain{en}{uk}{lash}
-%\def\theTitle{\ltSid{matinsforsunday}{p0001.title.cover}}
+%==================================================
+\input{\ltSystemPath/iso/res.iso.language.codes}
 
+\def\ltClientPath{clients/egy.gopaa}
+\input{\ltClientPath/settings}
 %==================================================
 % Actors on separate line?
 %
@@ -21,40 +23,7 @@
 % 
 %==================================================
 
-%==================================================
-% Which language or languages?
-% 
-% Controls language or languages to use.
-% Each language must have a folder with that name.
-%
-% Examples
-% 1. Greek and English
-%\ltSetPrimaryDomain{gr}{gr}{cog}
-%\ltSetRightDomain{en}{uk}{lash}
-%\input{resources/gr_gr_cog/res.liturgystjohn}
-%\input{resources/en_uk_lash/res.liturgystjohn}
 
-% 2. Greek and Albanian
-%\ltSetPrimaryDomain{gr}{gr}{cog}
-%\input{resources/gr_gr_cog/res.liturgystjohn}
-%\ltSetRightDomain{sqi}{alb}{koas}
-%\input{resources/sqi_alb_koas/res.liturgystjohn}
-
-% 3. Greek, English, and Albanian
-\ltSetPrimaryDomain{gr}{gr}{cog}
-\input{resources/gr_gr_cog/res.liturgystjohn}
-\ltSetCenterDomain{en}{uk}{lash}
-\input{resources/en_uk_lash/res.liturgystjohn}
-\ltSetRightDomain{sqi}{alb}{koas}
-\input{resources/sqi_alb_koas/res.liturgystjohn}
-
-% 4. English, Swahili, and Kikuyu
-%\ltSetPrimaryDomain{en}{uk}{lash}
-%\input{resources/en_uk_lash/res.liturgystjohn}
-%\ltSetCenterDomain{shw}{ke}{oak}
-%\input{resources/shw_ke_oak/res.liturgystjohn}
-%\ltSetRightDomain{kik}{ke}{oak}
-%\input{resources/kik_ke_oak/res.liturgystjohn}
 %==================================================
 %=========================================================
 % Global Settings

@@ -19,24 +19,11 @@
 
 \begin{document}
 
-\begin{titlingpage}
-\openup .5em
-\begin{center}
-\vspace*{6\baselineskip}
-\begin{minipage}{25em}
-\begin{center}
-\linespread{2}
-\huge\ltSid{pub.priest.servicebook}{li.liturgy.title.cover}\normalsize
-\end{center}
-\end{minipage}
-\vfill
-\includegraphics[width=.5\textwidth]{images/icxcnika.jpg}
+\ltCover
 
-\ltSid{client}{li.hierarchical.sponsor.title.cover}
-\end{center}
-
-\end{titlingpage}
 \frontmatter
+
+\ltCopyRight{}
 
 \pagebreak
 
@@ -48,11 +35,10 @@
 
 \mainmatter
 
-\ltSetNumberColumns{3}
-
+\ltColumnsOn
 %\huge
-%\input{formattest}
-\input{tmp.liturgystjohn}
+\input{formattest}
+%\input{tmp.liturgystjohn}
  
 \vfill
 

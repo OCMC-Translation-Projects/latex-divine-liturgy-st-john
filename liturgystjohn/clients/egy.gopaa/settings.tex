@@ -1,0 +1,45 @@
+\def\clientCountry{egy} % from https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+\def\clientAcronymn{gopaa}
+%==================================================
+% Which language or languages?
+% 
+% Controls language or languages to use.
+% Each language must have a folder with that name
+% in the resources folder, e.g. resources/gr_gr_cog
+%
+\ltSetPrimaryDomain{en}{uk}{lash}
+\ltSetCenterDomain{gr}{gr}{cog}
+\ltSetRightDomain{shw}{ke}{oak}
+
+% This will load the specified resource file
+%for each domain we declared above.
+\ltLoadResources{liturgystjohn}
+
+%=================================================
+% COVER PAGE
+% Add a key for each domain you use
+%=================================================
+\itKey{gr}{gr}{cog}{client.settings}{client.title}{%
+ΤΟ ΠΑΤΡΙΑΡΧΕΙΟ ΑΛΕΞΑΝΔΡΕΙΑΣ ΚΑΙ ΠΑΣΗΣ ΑΦΡΙΚΗΣ
+}
+\itKey{en}{uk}{lash}{client.settings}{client.title}{%
+GREEK ORTHODOX\\PATRIARCHATE OF ALEXANDRIA AND ALL AFRICA
+}
+\itKey{gr}{gr}{cog}{client.settings}{cover.title}{%
+Η ΘΕΙΑ ΛΕΙΤΟΥΡΓΙΑ ΤΟΥ ΕΝ ΑΓΙΟΙΣ ΠΑΤΡΟΣ ΗΜΩΝ ΙΩΑΝΝΟΥ ΤΟΥ ΧΡΥΣΟΣΤΟΜΟΥ
+}
+\itKey{en}{uk}{lash}{client.settings}{cover.title}{%
+The Divine Liturgy of \\Our Father Among the Saints John Chrysostom
+}
+\itKey{shw}{ke}{oak}{client.settings}{cover.title}{%
+The Divine Liturgy of \\Our Father Among the Saints John Chrysostom
+}
+%=================================================
+% COPYRIGHT PAGE
+%=================================================
+\itKey{sys}{client.settings}{\clientCountry}{\clientAcronymn}{copyright}{%
+\itRid{client.settings}{client.title}\ except as noted above.
+}%
+\itKey{sys}{client.settings}{\clientCountry}{\clientAcronymn}{publisher}{%
+TBD
+}%

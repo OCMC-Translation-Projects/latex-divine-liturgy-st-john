@@ -22,6 +22,7 @@
 \def\my{/ocmc/liturgical/text}% use as pgfkeys path prefix
 \def\myLoadedResources{\my/resources/loaded}%
 \def\myLoadedFonts{\my/fonts/loaded}%
+\def\ltSystemPath{system}
 
 \RequirePackage{etoolbox}%
 
@@ -118,7 +119,7 @@ addtohook={%
 %=============================================
 \usepackage{fontspec}%
 
-\def\myFontDir{fonts}%
+\def\myFontDir{system/fonts}%
 \usepackage{xcolor}%
 \colorlet{RED}{red} % to handle color in headers
 \definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
@@ -216,6 +217,7 @@ addtohook={%
 %=========================================================
 % Custom Commands
 %=========================================================
+
 \pgfkeys{%
     \my/resources/.cd%
     , path/.initial=resources%
@@ -250,6 +252,13 @@ addtohook={%
     , width/.initial=30%
 }
 
+\newbool{haveLeftDomain}%
+\boolfalse{haveLeftDomain}%
+\newbool{haveCenterDomain}%
+\boolfalse{haveCenterDomain}%
+\newbool{haveRightDomain}%
+\boolfalse{haveRightDomain}%
+
 %================================================
 % RESOURCE LOADING
 %================================================
@@ -258,7 +267,24 @@ addtohook={%
     \pgfkeyssetvalue{\myLoadedResources/#1/#2/#3/#4}{true}%
 }%
 
-\newcommand{\loadResource}[4]{%
+% This only works if all resources for a given
+% domain are in a single file.
+\newcommand{\ltLoadResources}[1]{%
+    \ifbool{haveLeftDomain}{%
+        \ltLoadResource{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}
+    }{%
+    }%
+    \ifbool{haveCenterDomain}{%
+        \ltLoadResource{\pgfkeysvalueof{\my/current/center/language}}{\pgfkeysvalueof{\my/current/center/country}}{\pgfkeysvalueof{\my/current/center/realm}}{#1}
+    }{%
+    }%
+    \ifbool{haveRightDomain}{%
+        \ltLoadResource{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}
+    }{%
+    }%
+}
+
+\newcommand{\ltLoadResource}[4]{%
     \IfFileExists{%
         \pgfkeysvalueof{\my/resources/path}/#1_#2_#3/res.#4.tex%
     }{%
@@ -269,7 +295,7 @@ addtohook={%
         \addResource{#1}{#2}{#3}{#4}%
         }%
     }{% false
-        missing \PackageError{ocmc-liturgical-text}{Missing \pgfkeysvalueof{\my/resources/path} #1_#2_#3/res.#4.tex}%
+        missing \PackageError{ocmc-liturgical-text}{Missing \pgfkeysvalueof{\my/resources/path}/#1_#2_#3/res.#4.tex}%
         {%
         Add the missing file.%
         }%    
@@ -361,7 +387,7 @@ Script=Arabic%
     \pgfkeysifdefined{/#1/#2/#3/#4/#5}{%
             % ignore...good to go
     }{%
-        \loadResource{#1}{#2}{#3}{#4}%
+        \ltLoadResource{#1}{#2}{#3}{#4}%
     }%
     \loadFont{#1}%
     \itSetPrimaryDomain{#1}{#2}{#3}%
@@ -378,6 +404,74 @@ Script=Arabic%
         {rus}{}%
     }[]%
 }
+
+\newcommand{\ltCopyrightNotice}[1]{%
+     \copyright\  \itSid{\pgfkeysvalueof{\my/current/#1/language}}{\pgfkeysvalueof{\my/current/#1/country}}{\pgfkeysvalueof{\my/current/#1/realm}}{copyright}{notice}\newline%
+}
+
+\newcommand{\ltCopyRight}{%
+\input{\ltSystemPath/copyright}%
+}
+
+\newcommand{\ltCover}{%
+    \ifbool{haveCenterDomain}{%
+        \def\vspaceskip{0}%
+    }{%
+        \ifbool{haveRightDomain}{%
+            \def\vspaceskip{2}%
+        }{%
+            \def\vspaceskip{6}%
+        }%
+    }%
+    \begin{titlingpage}
+    \openup .5em
+    \begin{center}
+    \vspace*{\vspaceskip\baselineskip}
+    \begin{minipage}{25em}
+    \begin{center}
+    \linespread{2}
+    \ltCoverTitle
+    \end{center}
+    \end{minipage}
+    \vfill
+    \includegraphics[width=.5\textwidth]{system/images/icxcnika.jpg}
+    
+    \ltSid{client.settings}{client.title}
+    \end{center}
+    \end{titlingpage}
+}
+\newcommand{\ltCoverTitle}{
+\huge\ltSid{client.settings}{cover.title}\normalsize%
+\ltCoverLanguages{}%
+%\ltCoverSubTitles{}%
+}
+\newcommand{\ltCoverLanguages}{%
+    \begin{center}
+    \ifbool{haveCenterDomain}{%
+        \itSid{sys}{iso}{language.code}{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/language}} |         \itSid{sys}{iso}{language.code}{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/center/language}} | \itSid{sys}{iso}{language.code}{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/right/language}}
+    }{%
+        \ifbool{haveRightDomain}{%
+        \itSid{sys}{iso}{language.code}{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/language}} | \itSid{sys}{iso}{language.code}{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/right/language}}
+        }{%
+        }%
+    }%
+    \end{center}
+}
+
+\newcommand{\ltCoverSubTitles}{%
+    \begin{center}
+    \ifbool{haveCenterDomain}{%
+            \itSid{\pgfkeysvalueof{\my/current/center/language}}{\pgfkeysvalueof{\my/current/center/country}}{\pgfkeysvalueof{\my/current/center/realm}}{client.settings}{cover.title}\newline%
+            \itSid{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{client.settings}{cover.title}%
+    }{%
+        \ifbool{haveRightDomain}{%
+            \itSid{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{client.settings}{cover.title}%
+        }{%
+        }%
+    }%
+    \end{center}
+}
+
 
 \newcommand{\ltChapter}[2]{
     \ltGetChapter{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
@@ -655,7 +749,6 @@ Script=Arabic%
 }%
 #1%
 }%
-\newcommand\ltCover[1]{\ltSetTypeographyDefault\huge{#1}}%
 
 \DeclareDocumentCommand\ltDesignation{ m m g g g g g g}{%
     \ltSidsFormat{\ltTextRedItalics}{\ltTextRedItalics}{\ltTextRedItalics}{\ltTextRedItalics}%
@@ -736,8 +829,26 @@ Script=Arabic%
     \ltSids{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}%
 }
 
+% Sets number of columns based on
+% whether or not user has declared
+% a domain for each column
+\newcommand{\ltColumnsOn}{%
+    \ifbool{haveCenterDomain}{%
+        \ltSetNumberColumns{3}%
+    }{%
+        \ifbool{haveRightDomain}{%
+            \ltSetNumberColumns{2}%
+        }{%
+            \ltSetNumberColumns{1}%
+        }%
+    }%
+}
 
+\newcommand{\ltColumnsOff}{\ltSetNumberColumns{1}}%
 
+% Valid values are 1, 2, or 3.
+% This controls the number of columns
+% to be displayed.
 \newcommand{\ltSetNumberColumns}[1]{%
     \pgfkeys{%
         \my/current/cols = #1%
@@ -750,6 +861,7 @@ Script=Arabic%
  , country = #2%
  , realm = #3%
  }%
+ \booltrue{haveLeftDomain}%
  \itSetPrimaryDomain{#1}{#2}{#3}
 }
 \newcommand{\ltSetCenterDomain}[3]{%
@@ -759,6 +871,7 @@ Script=Arabic%
  , country = #2%
  , realm = #3%
  }%
+ \booltrue{haveCenterDomain}%
 }
 \newcommand{\ltSetRightDomain}[3]{%
 \pgfkeys{\my/domains/right = /#1/#2/#3}%
@@ -767,6 +880,7 @@ Script=Arabic%
  , country = #2%
  , realm = #3%
  }%
+ \booltrue{haveRightDomain}%
 }
 
 \newcommand\ltColumnSeparatorColor[1]{\pgfkeys{\my/column/separator/rule/color = #1}}
@@ -790,9 +904,9 @@ Script=Arabic%
 \pgfkeysvalueof{\my/current/#1/realm}%
 }
 
-\newcommand{\loadResourceForSid}[1]{%
-\loadResource{\langPrimary}{\countryPrimary}{\realmPrimary}{#1}%
-\loadResource{\langSecondary}{\countrySecondary}{\realmSecondary}{#1}%
+\newcommand{\ltLoadResourceForSid}[1]{%
+\ltLoadResource{\langPrimary}{\countryPrimary}{\realmPrimary}{#1}%
+\ltLoadResource{\langSecondary}{\countrySecondary}{\realmSecondary}{#1}%
 }
 %=========================================================
 % Global Settings
