@@ -1,0 +1,233 @@
+\documentclass[]{memoir}
+\usepackage{verbatim}
+%\usepackage{hyperref}
+\usepackage[hyphenate]{system/ocmc-liturgical-text} 
+
+\def\ltOcmcSystem{OCMC ShareLatex Liturgical Workbench}
+\def\ltOcmcSystemAcronymn{OSLW}
+
+\DeclareDocumentCommand\ltDocParms{m m g g g g g g}{%
+\color{blue}%
+\IfValueTF {#8}{%
+\{#1\}\{#2\}\{#3\} \{#4\}\{#5\}\{#6\} \{#7\}\{#8\}%
+}{%
+    \IfValueTF {#7}{%
+    \{#1\}\{#2\}\{#3\}\{#4\}\{#5\}\{#6\}\{#7\}%
+    }{%
+        \IfValueTF {#6}{%
+        \{#1\}\{#2\}\{#3\}\{#4\}\{#5\}\{#6\}%
+        }{%
+            \IfValueTF {#5}{%
+            \{#1\}\{#2\}\{#3\}\{#4\}\{#5\}%
+            }{%
+            \IfValueTF {#4}{%
+            \{#1\}\{#2\}\{#3\}\{#4\}%
+            }{%
+                \IfValueTF {#3}{%
+                \{#1\}\{#2\}\{#3\}%
+                }{%
+                    \IfValueTF {#2}{%
+                    \{#1\} \{#2\}%
+                    }{%
+                    \{#1\}%
+                    }%
+                }%
+            }%
+            }%
+        }%
+    }%
+}%
+\color{black}%
+}
+\newcommand{\ltDocCommand}[2]{%
+\color{blue}{\textbackslash #1#2} \color{black}
+}
+
+\newenvironment{ltDocBlock}{
+\color{blue}\verbatim
+}
+{ 
+\endverbatim
+\color{black}
+}
+
+\newenvironment{myenv}{\begin{adjustwidth}{2cm}{}}{\end{adjustwidth}}
+
+\title{How to Use the\\\ltOcmcSystem  (\ltOcmcSystemAcronymn)\\ to Typeset Your Liturgical Translation}
+\author{Michael Colburn\\Orthodox Christian Mission Center (OCMC)}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\vfill
+
+\pagebreak
+
+\ltSetPrimaryDomain{en}{uk}{lash}
+\ltLoadResources{liturgystjohn}
+\chapter{Part of the Divine Liturgy - Three Examples}
+\begin{ltDocBlock}
+\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
+
+\ltDialogAloud{prayers}{exc01}
+\end{ltDocBlock}
+
+The two commands (above) produce the following:
+\small
+
+\textbf{English:}
+
+\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
+
+\ltDialogAloud{prayers}{exc01}
+
+\ltSetPrimaryDomain{en}{uk}{lash}
+\ltSetRightDomain{gr}{gr}{cog}
+\ltLoadResources{liturgystjohn}
+\ltColumnsOn
+\textbf{English and Greek:}
+
+\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
+
+\ltDialogAloud{prayers}{exc01}
+
+\ltSetPrimaryDomain{shw}{ke}{oak}
+\ltSetCenterDomain{en}{uk}{lash}
+\ltSetRightDomain{gr}{gr}{cog}
+\ltLoadResources{liturgystjohn}
+\ltColumnsOn
+\textbf{Swahili, English, and Greek:}
+
+\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
+
+\ltDialogAloud{prayers}{exc01}
+
+\ltColumnsOff
+\normalsize
+Things that start with a backslash character, that is, \textbackslash, are commands. 
+
+The first command says to look up two texts: the first is \ltDocParms{actors}{Priest}\ and the second is \ltDocParms{eu.lichrysbasil}{euLI.Key0201.text}.  The first line also says that the texts are to be formatted as an actor speaking a dialog in a low voice (\textbackslash ltActorDialogLowVoice).
+
+The second command says to look up the text \ltDocParms{prayers}{exc01}\ and format it as a dialog spoken aloud.
+
+Notice that the two commands automatically inserted the rubrics \color{red}in a low voice \color{black}and \color{red}aloud \color{black} and automatically colored them red.  It also automatically colored the word \color{red}(Priest) \color{black}red.
+
+If you are a translator, or if you are entering the text of someone's translation, you do not need to know these commands or to write them.  They have already been created for the liturgical text you are working on.  This means you do not need to be concerned about formatting your translation for publication.
+
+The only thing you need to focus on is entering your translation into a computer file that can be used by the \ltOcmcSystem.
+
+How does the system know which translation to use?  The answer is something like the system used to find a verse in a Bible.  When the Bible was first written, there were no chapter or verse numbers.  These were added later to make it easy to find a verse.  For example, John 1:1 is the first verse of the first chapter of the Gospel of John.  It doesn't matter what translation you use, it will use the same numbering system as other Bibles.
+
+For this reason, AGES Initiatives, Inc. and OCMC have created a way to identify every paragraph or part of a paragraph in the Eastern Orthodox Liturgical texts.  The system used by AGES and by OCMC is as follows.
+
+All individual liturgical text is identified by five pieces of information:
+
+\begin{enumerate}
+    \item language code, e.g. \emph{en} for English
+    \item country code, e.g. \emph{uk} for United Kingdom
+    \item realm, e.g. \emph{lash} for Fr. Ephrem Lash
+    \item topic, e.g. \emph{actors}
+    \item key, e.g. \emph{Priest}
+\end{enumerate}
+
+Here is an example of how the text is stored in a computer file:
+\begin{ltDocBlock}
+\itKey{en}{uk}{lash}{actors}{Priest}{
+Priest
+}%
+\end{ltDocBlock}
+
+The command \ltDocCommand{ltKey}{}tells the system that what follows is a key.  The parts after the command are called \emph{parameters} and specify the language, country, realm, and key name.
+
+The language and country codes come from an ISO standard.  The realm is used to identify the version of the translation.
+
+\emph{en} means the English language, \emph{uk} means as spoken in the United Kingdom, and \emph{lash} is the realm used for translations by Fr. Ephrem Lash.  \emph{actors} is the topic, and \emph{Priest} is the key.
+
+Here is the key for the Greek text:
+\begin{ltDocBlock}
+\itKey{gr}{gr}{cog}{actors}{Priest}{
+ΙΕΡΕΥΣ
+}%
+\end{ltDocBlock}
+
+And, here is the key for the Swahili text:
+
+\begin{ltDocBlock}
+\itKey{shw}{ke}{oak}{actors}{Priest}{
+KASISI
+}%
+\end{ltDocBlock}
+
+Now, compare the keys (above) for \ltDocParms{en}{uk}{lash}, \ltDocParms{gr}{gr}{cog}, and \ltDocParms{shw}{ke}{oak}.
+
+Each of the three keys has the same topic and key.
+
+If you are in a hurry, you can just read the section below to get started.  If you want to understand more, read the rest of this guide.
+
+\chapter{If You Are In a Hurry}
+There is a lot of information in this guide.  But, if you just want to quickly learn how to use an OCMC ShareLatex project for your translation, here is what to do.
+\begin{enumerate}
+    \item You need to get a ShareLatex account from \url{https://www.sharelatex.com/register}.  It is free.
+    \item You need to ask an OCMC staff member to create a ShareLatex OCMC project for your translation.  
+    \item Once the project is ready, an OCMC staff member will notify you.  He or she will provide you with the name of the translation project, and the name of the folder and files in which you will put your translation.
+    \item When you log on to the ShareLatex website, you will see your project listed.  Click on the project name to open it up.
+    \item Click on the \textit{Recompile} button to create a PDF file of your translation.  The first time you open the project, instead of your translation you will see English or some other language.
+    \item Open the folder named \textit{resources}.
+    \item Open the folder for your translation project.
+    \item Open your translation file.
+    \item Replace the English text with your translation.
+    \item To download the PDF file, click on the three red bars on the upper left of the browser window. Then click on the icon that says PDF.  
+    \item To exit your project, click on the grey arrow to the right of the three red bars on the upper left of the browser.
+\end{enumerate}
+\chapter{Introduction}
+\section{Who this Guide is For}
+This guide has been written for the following types of people:
+\begin{enumerate}
+    \item People who are translating the Eastern Orthodox Christian Liturgical texts into their own native language.
+    \item People who are typesetting a translation for distribution as a PDF file or as a printed book.
+    \item OCMC staff who help others use the OCMC Liturgical Text Package.
+\end{enumerate}
+\section{The Problems Faced by Liturgical Translators}
+\begin{enumerate}
+    \item Much work is required to typeset a liturgical document for publication.
+    \item No matter what language the liturgical document is in, the layout should be the same as for other languages if it is the same liturgical text.  For example, whether it is the Divine Liturgy in Swahili or Korean, the basic layout should be the same.
+    \item It is inefficient use of time and resources if every translator has to typeset his or her own translation.
+    \item In some places in the world, there is a need to produce liturgical texts with multiple languages, with side-by-side columns.  This increases the difficulty for typesetting the document.
+    \item It is easy to misplace computer files containing a translation, or to accidently work with an older version instead of the most recent.
+    \item It can be difficult for a translator to get help from someone who knows how to typeset a document.
+\end{enumerate}
+\section{A Two Part Solution}
+\subsection{Part 1: The OCMC Liturgical Text Package for \LaTeX}
+The ocmc-liturgical-text \LaTeX package addresses many of the problems listed above.
+\begin{enumerate}
+    \item It allows a translator or someone helping a translator to just focus on entering the translation.  They do not need to worry about the layout.
+    \item It provides a standardized layout for liturgical texts.  This standard layout is defined by templates that can be reused for any language.
+    \item It provides a way to easily produce a PDF file that is for a single language, two languages, or three languages, side-by-side.
+\end{enumerate}
+\subsection{Part 2: ShareLatex}
+By itself, the ocmc-liturgical-text package cannot solve the problem of misplaced computer files or provide an easy means for translators and others to get help typesetting a document.  These two issues are solved by use of ShareLatex.  ShareLatex is an Internet site that provides tools for people to typeset documents using \LaTeX. ShareLatex provides the following features:
+\begin{enumerate}
+    \item The translation text and the typesetting templates are stored in a server accessed through the Internet.
+    \item The files are stored together as a \textit{project}.
+    \item ShareLatex provides a means to link a project to a GitHub repository.  GitHub is a website that allows people to keep a copy of both current and prior versions of files.  
+    \item Privacy and Security.  The translation projects that OCMC creates in ShareLatex are private and secure.  The projects can only be viewed by those to whom the OCMC staff grant access.  And, they can only be updated by those to whom OCMC grants this authority. In order to access a project, a person must have a ShareLatex account.  The person uses his or her username and password to access the projects to which they have been granted the right to view or update.  The Github copy of a project can be either public or private.
+    \item Getting help from OCMC staff.  ShareLatex provides a chat window that can be used for people to ask questions or to let OCMC staff know they need help.
+    \item Collaboration.  A project can be viewed and updated by more than one person at a time.  ShareLatex shows the user the names of other people currently working on the project.  ShareLatex shows the user where each person's cursor is in the text.  When a change is made, each person's screen automatically updates.
+\end{enumerate}
+\chapter{The Details}
+\section{How to Enter Your Translation}
+Each piece of text has a key assigned to it.  For example:
+
+\begin{verbatim}
+\itKey{en}{uk}{lash}{pub.priest.servicebook}{li.liturgy.title.cover}{
+The Divine Liturgy of Our Father Among the Saints John Chrysostom
+}%
+
+\end{verbatim}
+\vfill
+
+\pagebreak
+
+\end{document}

@@ -44,14 +44,26 @@
 \pagestyle{ruled}
 
 % header and footer settings
+% \leftmark is the chapter title
+% \rightmark is the section title.
 \makeevenhead{ruled}{}{\rightmark}{\thepage}
 \makeoddhead{ruled}{\thepage}{\leftmark}{}
 \makeevenfoot{ruled}{}{}{}
 \makeoddfoot{ruled}{}{}{}
+\setbool{subsectionInHeader}{true}% false to turn off 
+{\addtolength{\beforechapskip}{-3\baselineskip}
+{\addtolength{\afterchapskip}{-3\baselineskip}
 
 % to help with avoiding overfull 
-% hbox with narrow columns:
-\tolerance=400      
-\hbadness=399   
-\setlength{\emergencystretch}{1em}
-
+% hbox with narrow columns.
+% Note that the max is 10000 for h or vbadness.
+% If you set to 10000 completely ignores.
+% 9999 is tolerant of anything up to 10000
+\def\mysloppy{%
+  \tolerance=9999
+  \setlength{\emergencystretch}{0.5em}
+  \hfuzz 1pt
+  \vfuzz=\hfuzz
+  \hbadness=9999
+  \vbadness=\maxdimen
+}

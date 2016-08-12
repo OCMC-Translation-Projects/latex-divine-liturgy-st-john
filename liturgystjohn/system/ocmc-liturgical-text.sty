@@ -17,7 +17,11 @@
 % - way to set root folder for resources
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ocmc-liturgical-text}[2016/07/23 Formatting of Eastern Orthodox Christian Liturgical Texts]
+\ProvidesPackage{ocmc-liturgical-text}[2016/08/11 Formatting of Eastern Orthodox Christian Liturgical Texts]
+
+\usepackage{silence}
+\WarningsOff*
+%\WarningFilter{latex}{You have requested Package}
 
 \def\my{/ocmc/liturgical/text}% use as pgfkeys path prefix
 \def\myLoadedResources{\my/resources/loaded}%
@@ -62,15 +66,16 @@
 
 \ProcessOptions*
 \ifbool{debugKeys}{%
-    \RequirePackage[debug]{i18n-topic-key}%
+    \RequirePackage[debug]{system/i18n-topic-key}%
 }{%
-    \RequirePackage{i18n-topic-key}%
+    \RequirePackage{system/i18n-topic-key}%
 }
 
 %=====================================%===========
 % Packages
 %================================================
 \RequirePackage{etex}
+\usepackage{microtype} % Improves character and word spacing
 \usepackage{comment} % comment out lines with \begin{comment} ... \end{comment}
 \usepackage{ragged2e} % so margins can be ragged
 \usepackage{titlesec}
@@ -262,6 +267,9 @@ addtohook={%
 \newbool{blessed}
 \boolfalse{blessed}
 
+\newbool{subsectionInHeader}
+\booltrue{subsectionInHeader}
+
 %================================================
 % RESOURCE LOADING
 %================================================
@@ -386,6 +394,9 @@ Script=Arabic%
 %================================================
 
 
+% sets things up for various languages.
+% Note that if the language is not matched
+% by the \IfStrEqCase, it treats it like English
 \newcommand{\setup}[5]{%
     \pgfkeysifdefined{/#1/#2/#3/#4/#5}{%
             % ignore...good to go
@@ -405,11 +416,11 @@ Script=Arabic%
         }%
         {heb}{\hebrewfont\setRTL}%
         {rus}{}%
-    }[]%
+    }[\ifbool{hyphenate}{\selectlanguage{english}}{}]%
 }
 
 \newcommand{\ltCopyrightNotice}[1]{%
-     \copyright\  \itSid{\pgfkeysvalueof{\my/current/#1/language}}{\pgfkeysvalueof{\my/current/#1/country}}{\pgfkeysvalueof{\my/current/#1/realm}}{copyright}{notice}\newline%
+     \copyright\  \itSid{\pgfkeysvalueof{\my/current/#1/language}}{\pgfkeysvalueof{\my/current/#1/country}}{\pgfkeysvalueof{\my/current/#1/realm}}{copyright}{notice}%
 }
 
 \newcommand{\ltCopyRight}{%
@@ -531,10 +542,10 @@ Script=Arabic%
                 }%
         {2}{% output two columns
             \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-            \sloppy%
+            \mysloppy%
             \begin{paracol}{2}%
             	\begin{leftcolumn}%
-                    \ltGetSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
+                \ltGetSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
                 \end{leftcolumn}%          
             	\begin{rightcolumn}%
                     \ltGetSection{\pgfkeysvalueof{\my/current/right/language}}{\pgfkeysvalueof{\my/current/right/country}}{\pgfkeysvalueof{\my/current/right/realm}}{#1}{#2}%
@@ -543,7 +554,7 @@ Script=Arabic%
         }%
         {3}{% output three columns
             \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-            \sloppy%
+            \mysloppy%
             \begin{paracol}{3}%
                     \ltGetSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
                 \switchcolumn%
@@ -575,7 +586,7 @@ Script=Arabic%
                 }%
         {2}{% output two columns
             \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-            \sloppy%
+            \mysloppy%
             \begin{paracol}{2}%
             	\begin{leftcolumn}%
                     \ltGetSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
@@ -587,7 +598,7 @@ Script=Arabic%
         }%
         {3}{% output three columns
             \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-            \sloppy%
+            \mysloppy%
             \begin{paracol}{3}%
                     \ltGetSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
                 \switchcolumn%
@@ -605,7 +616,11 @@ Script=Arabic%
 \ltCheckTitles{#1}{#2}{#3}{#4}{#5}%
 \ifbool{titleHasAllParts}{%
 \subsection[\itSid{#1}{#2}{#3}{#4}{#5.toc}]{\itSid{#1}{#2}{#3}{#4}{#5.doc}}%
+\ifbool{subsectionInHeader}{%
+\sectionmark{\itSid{#1}{#2}{#3}{#4}{#5.header}}%
+}{%
 \subsectionmark{\itSid{#1}{#2}{#3}{#4}{#5.header}}%
+}%
 \setLTR%
 }{%
 \throwTitleError{#1}{#2}{#3}{#4}{#5}%
@@ -619,7 +634,7 @@ Script=Arabic%
                 }%
         {2}{% output two columns
             \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-            \sloppy%
+            \mysloppy%
             \begin{paracol}{2}%
             	\begin{leftcolumn}%
                     \ltGetSubSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
@@ -631,7 +646,7 @@ Script=Arabic%
         }%
         {3}{% output three columns
             \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-            \sloppy%
+            \mysloppy%
             \begin{paracol}{3}%
                     \ltGetSubSubSection{\pgfkeysvalueof{\my/current/left/language}}{\pgfkeysvalueof{\my/current/left/country}}{\pgfkeysvalueof{\my/current/left/realm}}{#1}{#2}%
                 \switchcolumn%
@@ -712,7 +727,7 @@ Script=Arabic%
         }%
     {2}{% output two columns
         \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-        \sloppy%
+        \mysloppy%
         \begin{paracol}{2}%
         	\begin{leftcolumn}%
 			\ltTypeography{}%
@@ -728,7 +743,7 @@ Script=Arabic%
     }%
     {3}{% output three columns
         \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-        \sloppy%
+        \mysloppy%
         \begin{paracol}{3}%
             \ltGetColVal{left}{#1}{#2}%          
             \switchcolumn%
@@ -902,9 +917,6 @@ Script=Arabic%
 
 \newcommand\ltColumnSeparatorColor[1]{\pgfkeys{\my/column/separator/rule/color = #1}}
 
-% Calls ltGetVal for specified column, i.e. left, center, right
-% if the topic is actors and we are not putting the actor on
-% a separate line, it gets the colon version
 \newcommand\ltGetColVal[3]{%
     \ltGetVal{\ltGetLanguage{#1}}{\ltGetCountry{#1}}{\ltGetRealm{#1}}{#2}{#3}%
 }%
@@ -926,13 +938,13 @@ Script=Arabic%
 \ltLoadResource{\langSecondary}{\countrySecondary}{\realmSecondary}{#1}%
 }
 %=========================================================
-% Global Settings
+% Global Settings. Overriden if control.tex used
 %=========================================================
 \setlength{\parindent}{0em} % turns off indenting of paragraphs.  Comment out to turn on.
 \setlength{\parskip}{1em}  % spacing between paragraphs 0.5 is usual
 \setlength{\JustifyingParindent}{0em} % turns off indenting of paragraphs.  Comment out to turn on.
 \setlength{\JustifyingParfillskip}{0.5em}  % spacing between paragraphs 0.5 is usual
-\setsecnumdepth{none}
+\setsecnumdepth{none} % none turns off numbering
 \maxsecnumdepth{none}
 \titleformat{\section}[block]{\color{blue}\Large\bfseries\filcenter}{}{1em}{}
 \pagestyle{ruled}
@@ -940,7 +952,24 @@ Script=Arabic%
 \makeoddhead{ruled}{\thepage}{\leftmark}{}
 \makeevenfoot{ruled}{}{}{}
 \makeoddfoot{ruled}{}{}{}
+\setbool{subsectionInHeader}{true}% false to turn off 
+{\addtolength{\beforechapskip}{-3\baselineskip}
+{\addtolength{\afterchapskip}{-3\baselineskip}
 
+
+% to help with avoiding overfull 
+% hbox with narrow columns.
+% Note that the max is 10000 for h or vbadness.
+% If you set to 10000 completely ignores.
+% 9999 is tolerant of anything up to 10000
+\def\mysloppy{%
+  \tolerance=9999
+  \setlength{\emergencystretch}{0.5em}
+  \hfuzz 1pt
+  \vfuzz=\hfuzz
+  \hbadness=9999
+  \vbadness=\maxdimen
+}
 %================================================
 % SID APPENDERS for each COLUMN
 %================================================
@@ -1148,7 +1177,7 @@ Script=Arabic%
 }
 
 \newcommand{\ltRubricDialog}[4]{%
-    \ltSidsFormat{\ltTextRed}{\ltTextBlack}
+    \ltSidsFormat{\ltTextRed}{\ltTextBlack}%
     \ltSids{#1}{#2}{#3}{#4}%
 }
 
@@ -1347,7 +1376,7 @@ Script=Arabic%
         }%
     {2}{% output two columns
         \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-        \sloppy%
+        \mysloppy%
         \begin{paracol}{2}%
         	\begin{leftcolumn}%
 			\ltTypeography{}%
@@ -1363,7 +1392,7 @@ Script=Arabic%
     }%
     {3}{% output three columns
         \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
-        \sloppy%
+        \mysloppy%
         \begin{paracol}{3}%
 			\ltTypeography{}%
 			#1
