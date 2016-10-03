@@ -1,0 +1,156 @@
+\documentclass[]{memoir}
+\usepackage{setspace}
+\usepackage{system/oslw-documentation}
+
+\def\ltDocLanguage{en}
+\def\ltDocPreparedFor{mege}
+\def\ltDocPreparedBy{mac}
+\def\ltDocProjectCode{oslw.2016.002}
+
+\title{
+
+\ltOcmcSystem\  (\ltOcmcSystemAcronymn)\\
+
+\bigskip\vskip 0.2in
+\HUGE How To Get Started\\
+\bigskip\vskip 0.2in
+\normalsize
+}
+\author{%
+\ltDocPreparedForBy{\ltDocLanguage}{\ltDocPreparedFor}{\ltDocPreparedBy}
+}
+\date{\today}
+
+\begin{document}
+\setcounter{secnumdepth}{1}
+
+\maketitle
+
+\vfill
+
+\pagebreak
+%\linenumbers
+\mainmatter
+\chapter{Welcome!}
+This document provides you information so that you can start using the \ltOcmcSystem, which is referred to using the acronymn \ltOcmcSystemAcronymn.
+
+The advantages of the \ltOcmcSystemAcronymn\ are:
+\begin{enumerate}
+\item We have formatted the liturgical text for you.  You only need to focus on entering your translation.
+\item The amount of text you have to translate is significantly reduced.  Phrases, sentences, and paragraphs that occur repeatedly in liturgical text only need to be translated once.  For example, you only need to translate "Lord have mercy" once.  Your translation will automatically be inserted wherever it is needed.
+\item You can tell the \ltOcmcSystemAcronymn\ to produce the liturgical text with just your translation, or with up to two additional versions.
+\item You can use the side-by-side versions to help you while translating, or to produce a PDF file for liturgical use in multilingual parishes.
+\item Your project is stored on a website called ShareLatex.
+\item You do not need to install any special software on your computer.
+\item You can do you work from any computer, using a web browser.
+\item At any time you can download a PDF version of your work.
+\item You have a person assigned to help you with using the \ltOcmcSystemAcronymn.  You and that person can view your work at the same time.
+\item At any time you can download a zip of all your files.
+\item Your project files are not viewable by anyone except you and the OCMC staff helping you.
+\item Your work is backed up to a secure location for safe keeping.  The backup can be made private so it is only viewable by OCMC staff.  The backup is made to a website called GitHub.
+\end{enumerate}
+\chapter{Important Information}
+
+
+\section{Your Project}
+
+\ltDocProject{en}{\ltDocProjectCode}
+
+\section{Project Coordinator(s) To Help You}
+Your project has one or more individuals assigned to help you in your use of the \ltOcmcSystemAcronymn. The acronymn for a \emph{Project Coordinator} is \emph{PC}.  The primary PC is the one you should contact first if there is an issue.  If a second PC has been assigned only contact that person if the primary PC has told you he or she will not be available for a period of time, or the primary PC has not responded within two working days.
+
+Here is information about your primary coordinator:
+
+\ltDocCoordinator{en}{mac}
+
+Here is information about your secondary coordinator:\\
+
+None assigned.\\
+
+
+The PC for your project will assist you in the following ways:
+
+\begin{enumerate}
+\item Set up your project in ShareLatex.
+\item Provide you with information you need to get started.
+\item Provide you with additional information as needed.
+\item Answer questions that you have about using the \ltOcmcSystemAcronymn.
+\item Solve any problems you encounter in using the \ltOcmcSystemAcronymn.
+\item Make backup copies of your files in a safe location (on GitHub).
+\end{enumerate}
+
+
+\section{Technologies To Be Used for Your Project}
+
+Your project will make use of the following computer technologies:
+
+\ltDocTechnology{en}{latex}
+\ltDocTechnology{en}{ocmc.i18n}
+\ltDocTechnology{en}{ocmc.liturgical.text}
+\ltDocTechnology{en}{sharelatex}
+\ltDocTechnology{en}{browser}
+\ltDocTechnology{en}{skype}
+\ltDocTechnology{en}{github}
+
+\section{The Domains for Translation(s) You are Working On}
+
+Here are the codes used for the translation(s) you are working on, and the commands you can use to produce documents with a single, two, or three languages:  
+
+\ltDocDomain{kik}{ke}{oak}
+\ltDocDomain{swh}{ke}{oak}
+
+\section{The Domains of Additional Versions Available To You}
+
+The following domains may be used for additional columns in your document.  This can be useful while you are translating, or to produce a document for use in a parish that uses more than one language.
+
+\ltDocDomain{gr}{gr}{cog}
+\ltDocDomain{en}{uk}{lash}
+
+\section{ShareLatex Project Folders}
+
+In your project, there are the following folders:
+
+\pex
+
+\a resources: contains the text of the original Greek and various translations.  Contains your translation files.
+\a system: contains information that only a project coordinator should change.
+\a templates: contains the information used by the system to format the liturgical text you are working on.
+\a your.choices: contains files you will edit.
+\xe
+
+\section{ShareLatex Files That You Will Edit}
+
+These are the files you will edit:
+
+\pex
+
+\a client/ke.oak/settings.tex
+\a client/ke.oak/preface.tex
+\a resources/kik\textunderscore isr \textunderscore aaawf/res.liturgystjohn.tex
+\a resources/swh\textunderscore isr \textunderscore aaawf/res.liturgystjohn.tex
+\xe
+
+The purpose of the settings.tex file is:
+\begin{enumerate}
+\item Control whether your document will be produced using one domain, two domains, or three domains.
+\item Enter the text that will appear on the cover page.
+\end{enumerate}
+
+Domain Codes uniquely identify a version of liturgical text. They are made from a language code, country code, and realm. You can use one to three domains in producing a document. You can produce a document with only one language by setting just the Primary Domain. 
+
+You can add up to two more languages, with a total of three columns. 
+
+These commands are listed above in the information about the domains you are using for your translation and additional domains available to you. You set the commands in your settings.tex file. The primary language is always the left column and is also the language of the cover page.  In a two column document, the Primary Domain is in the left column, and Right Domain is in the column on the right.  In a three column document, the Primary Domain is in the left column, the Center Domain is in the center column, and the Right Domain is in the right column.
+
+The purpose of the preface.tex is to enter the text for the preface for your document.
+
+The purpose of the res.liturgystjohn.tex files is to enter translations for the liturgical text.  Notice that there is a res.liturgystjohn.tex file for each domain you are working on.
+
+\bigskip
+For more information, please refer to the separate PDF titled:
+\bigskip
+
+\noindent How to Use the \ltOcmcSystem (\ltOcmcSystemAcronymn) to Typeset Your Liturgical Translation
+
+ 
+\end{document}

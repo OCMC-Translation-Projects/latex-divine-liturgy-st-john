@@ -17,7 +17,7 @@
 % - way to set root folder for resources
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ocmc-liturgical-text}[2016/08/11 Formatting of Eastern Orthodox Christian Liturgical Texts]
+\ProvidesPackage{ocmc-liturgical-text}[2016/08/17 Formatting of Eastern Orthodox Christian Liturgical Texts]
 
 \usepackage{silence}
 \WarningsOff*
@@ -270,6 +270,13 @@ addtohook={%
 \newbool{subsectionInHeader}
 \booltrue{subsectionInHeader}
 
+\newbool{leftDomainIsRightToLeft}%
+\boolfalse{leftDomainIsRightToLeft}%
+\newbool{centerDomainIsRightToLeft}%
+\boolfalse{centerDomainIsRightToLeft}%
+\newbool{rightDomainIsRightToLeft}%
+\boolfalse{rightDomainIsRightToLeft}%
+
 %================================================
 % RESOURCE LOADING
 %================================================
@@ -315,6 +322,7 @@ addtohook={%
 %================================================
 % SPECIAL FONT LOADING
 %================================================
+
 \newcommand{\loadArabicFont}{%
 \newfontfamily\arabicfont[%
 Script=Arabic%
@@ -351,12 +359,40 @@ Script=Arabic%
             {gr}{}%
             {heb}{\loadHebrewFont}%
             {rus}{}%
+            {yid}{\loadHebrewFont}%
         }[]%
         \addFont{#1}%
     }%
 }%
 
-
+% checks the given language code to see
+% if this is a RightToLeft language,
+% and if so, sets the isRightToLeft
+% boolean to true.
+\newcommand{\ltSetDirectionForLeft}[1]{%
+    \boolfalse{leftDomainIsRightToLeft}
+    \IfStrEqCase{#1}{% change to true if is Right To Left
+        {ara}{\booltrue{leftDomainIsRightToLeft}}%
+        {heb}{\booltrue{leftDomainIsRightToLeft}}%
+        {yid}{\booltrue{leftDomainIsRightToLeft}}%
+    }[]%
+}
+\newcommand{\ltSetDirectionForCenter}[1]{%
+    \boolfalse{centerDomainIsRightToLeft}
+    \IfStrEqCase{#1}{% change to true if is Right To Left
+        {ara}{\booltrue{centerDomainIsRightToLeft}}%
+        {heb}{\booltrue{centerDomainIsRightToLeft}}%
+        {yid}{\booltrue{centerDomainIsRightToLeft}}%
+    }[]%
+}
+\newcommand{\ltSetDirectionForRight}[1]{%
+    \boolfalse{rightDomainIsRightToLeft}
+    \IfStrEqCase{#1}{% change to true if is Right To Left
+        {ara}{\booltrue{rightDomainIsRightToLeft}}%
+        {heb}{\booltrue{rightDomainIsRightToLeft}}%
+        {yid}{\booltrue{rightDomainIsRightToLeft}}%
+    }[]%
+}
 %================================================
 % COMMANDS TO VERIFY A TITLE HAS KEYS FOR .doc .toc .header
 %================================================
@@ -745,11 +781,21 @@ Script=Arabic%
         \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
         \mysloppy%
         \begin{paracol}{3}%
-            \ltGetColVal{left}{#1}{#2}%          
-            \switchcolumn%
+        	\begin{nthcolumn}{0}%
+			\ltTypeography{}%
+            \ltGetColVal{left}{#1}{#2}%
+            \ltTempTypeographyDefault%
+            \end{nthcolumn}%          
+        	\begin{nthcolumn}{1}%
+			\ltTypeography{}%
             \ltGetColVal{center}{#1}{#2}%          
-            \switchcolumn%
-            \ltGetColVal{right}{#1}{#2}%          
+            \ltTempTypeographyDefault%
+            \end{nthcolumn}%          
+        	\begin{nthcolumn}{2}%
+			\ltTypeography{}%
+            \ltGetColVal{right}{#1}{#2}%         
+            \ltTempTypeographyDefault%
+            \end{nthcolumn}%          
         \end{paracol}%
     }%
 }[]%
@@ -894,7 +940,8 @@ Script=Arabic%
  , realm = #3%
  }%
  \booltrue{haveLeftDomain}%
- \itSetPrimaryDomain{#1}{#2}{#3}
+ \itSetPrimaryDomain{#1}{#2}{#3}%
+\ltSetDirectionForLeft{#1}%
 }
 \newcommand{\ltSetCenterDomain}[3]{%
 \pgfkeys{\my/domains/center = /#1/#2/#3}%
@@ -904,6 +951,7 @@ Script=Arabic%
  , realm = #3%
  }%
  \booltrue{haveCenterDomain}%
+\ltSetDirectionForCenter{#1}%
 }
 \newcommand{\ltSetRightDomain}[3]{%
 \pgfkeys{\my/domains/right = /#1/#2/#3}%
@@ -913,6 +961,7 @@ Script=Arabic%
  , realm = #3%
  }%
  \booltrue{haveRightDomain}%
+\ltSetDirectionForRight{#1}%
 }
 
 \newcommand\ltColumnSeparatorColor[1]{\pgfkeys{\my/column/separator/rule/color = #1}}
@@ -970,34 +1019,6 @@ Script=Arabic%
   \hbadness=9999
   \vbadness=\maxdimen
 }
-%================================================
-% SID APPENDERS for each COLUMN
-%================================================
-
-\def\ltLeftAppended{}
-\def\ltCenterAppended{}
-\def\ltRightAppended{}
-
-\newcommand{\ltAppendLeft}[1]{%
-\edef\ltLeftAppended{\ltLeftAppended{} #1}%
-}
-\newcommand{\ltClearLeft}{%
-\edef\ltLeftAppended{}
-}
-
-\newcommand{\ltAppendCenter}[1]{%
-\edef\ltCenterAppended{\ltCenterAppended{} #1}%
-}
-\newcommand{\ltClearCenter}{%
-\edef\ltCenterAppended{}
-}
-
-\newcommand{\ltAppendRight}[1]{%
-\edef\ltRightAppended{\ltRightAppended{} #1}%
-}
-\newcommand{\ltClearRight}{%
-\edef\ltRightAppended{}%
-}
 
 %================================================
 % MULTI SID -- NEEDED FOR MULTILINGUAL TEXT
@@ -1034,55 +1055,133 @@ Script=Arabic%
     \ltFormatThree{\theLeft}{\theCenter}{\theRight}%
 }
 
+% Globally defines the text for a Left Column line by concatenating the parms
 \DeclareDocumentCommand\ltSidsAppendersLeft{m m m m g g g g } {%
     \global\def\theLeft{}% first set to be empty
-    \IfValueTF{#7}{%
-        \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6} \sidFourFormat\ltGetColVal{left}{#7}{#8}}%
-    }{%
-        \IfValueTF{#5}{%
-            \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6}}%
+    \ifbool{leftDomainIsRightToLeft}{%
+        \IfValueTF{#7}{%
+            \global\def\theLeft{%
+                \setRTL%
+                \sidOneFormat\ltGetColVal{left}{#1}{#2} \sidOneFormat \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidTwoFormat \sidThreeFormat\ltGetColVal{left}{#5}{#6} \sidThreeFormat \ltGetColVal{left}{#7}{#8}\sidFourFormat%
+            }%
         }{%
-            \IfValueTF{#3}{%
-                \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4}}%
+            \IfValueTF{#5}{%
+                \global\def\theLeft{%
+                    \setRTL%
+                    \sidOneFormat\ltGetColVal{left}{#1}{#2} \sidOneFormat \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidTwoFormat \ltGetColVal{left}{#5}{#6}\sidThreeFormat%
+                }%
             }{%
-                \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2}}%
+                \IfValueTF{#3}{%
+                \global\def\theLeft{%
+                    \setRTL%
+                        \sidTwoFormat\ltGetColVal{left}{#1}{#2} \sidOneFormat \ltGetColVal{left}{#3}{#4}%
+                }%
+                }{%
+                    \global\def\theLeft{\setRTL\sidOneFormat\ltGetColVal{left}{#1}{#2}}%
+                }%
             }%
         }%
-    }%
+    }{%
+        \IfValueTF{#7}{%
+            \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6} \sidFourFormat\ltGetColVal{left}{#7}{#8}}%
+        }{%
+            \IfValueTF{#5}{%
+                \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4} \sidThreeFormat\ltGetColVal{left}{#5}{#6}}%
+            }{%
+                \IfValueTF{#3}{%
+                    \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2} \sidTwoFormat\ltGetColVal{left}{#3}{#4}}%
+                }{%
+                    \global\def\theLeft{\sidOneFormat\ltGetColVal{left}{#1}{#2}}%
+                }%
+            }%
+        }%
+    }
 }
 
+% Globally defines the text for a Center Column line by concatenating the parms
 \DeclareDocumentCommand\ltSidsAppendersCenter{m m m m g g g g } {%
     \global\def\theCenter{}% first set to be empty
-    \IfValueTF{#7}{%
-        \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidThreeFormat\ltGetColVal{center}{#5}{#6} \sidFourFormat\ltGetColVal{center}{#7}{#8}}%
-    }{%
-        \IfValueTF{#5}{%
-            \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidThreeFormat\ltGetColVal{center}{#5}{#6}}%
+    \ifbool{centerDomainIsRightToLeft}{%
+        \IfValueTF{#7}{%
+            \global\def\theCenter{%
+                \setRTL%
+                \sidOneFormat\ltGetColVal{center}{#1}{#2} \sidOneFormat \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidTwoFormat \sidThreeFormat\ltGetColVal{center}{#5}{#6} \sidThreeFormat \ltGetColVal{center}{#7}{#8}\sidFourFormat%
+            }%
         }{%
-            \IfValueTF{#3}{%
-                \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4}}%
+            \IfValueTF{#5}{%
+                \global\def\theCenter{%
+                    \setRTL%
+                    \sidOneFormat\ltGetColVal{center}{#1}{#2} \sidOneFormat \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidTwoFormat \ltGetColVal{center}{#5}{#6}\sidThreeFormat%
+                }%
             }{%
-                \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2}}%
+                \IfValueTF{#3}{%
+                \global\def\theCenter{%
+                    \setRTL%
+                        \sidTwoFormat\ltGetColVal{center}{#1}{#2} \sidOneFormat \ltGetColVal{center}{#3}{#4}%
+                }%
+                }{%
+                    \global\def\theCenter{\setRTL\sidOneFormat\ltGetColVal{center}{#1}{#2}}%
+                }%
             }%
         }%
-    }%
+    }{%
+        \IfValueTF{#7}{%
+            \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidThreeFormat\ltGetColVal{center}{#5}{#6} \sidFourFormat\ltGetColVal{center}{#7}{#8}}%
+        }{%
+            \IfValueTF{#5}{%
+                \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4} \sidThreeFormat\ltGetColVal{center}{#5}{#6}}%
+            }{%
+                \IfValueTF{#3}{%
+                    \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2} \sidTwoFormat\ltGetColVal{center}{#3}{#4}}%
+                }{%
+                    \global\def\theCenter{\sidOneFormat\ltGetColVal{center}{#1}{#2}}%
+                }%
+            }%
+        }%
+    }
 }
 
+% Globally defines the text for a Right Column line by concatenating the parms
 \DeclareDocumentCommand\ltSidsAppendersRight{m m m m g g g g } {%
     \global\def\theRight{}% first set to be empty
-    \IfValueTF{#7}{%
-        \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidThreeFormat\ltGetColVal{right}{#5}{#6} \sidFourFormat\ltGetColVal{right}{#7}{#8}}%
-    }{%
-        \IfValueTF{#5}{%
-            \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidThreeFormat\ltGetColVal{right}{#5}{#6}}%
+    \ifbool{rightDomainIsRightToLeft}{%
+        \IfValueTF{#7}{%
+            \global\def\theRight{%
+                \setRTL%
+                \sidOneFormat\ltGetColVal{right}{#1}{#2} \sidOneFormat \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidTwoFormat \sidThreeFormat\ltGetColVal{right}{#5}{#6} \sidThreeFormat \ltGetColVal{right}{#7}{#8}\sidFourFormat%
+            }%
         }{%
-            \IfValueTF{#3}{%
-                \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4}}%
+            \IfValueTF{#5}{%
+                \global\def\theRight{%
+                    \setRTL%
+                    \sidOneFormat\ltGetColVal{right}{#1}{#2} \sidOneFormat \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidTwoFormat \ltGetColVal{right}{#5}{#6}\sidThreeFormat%
+                }%
             }{%
-                \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2}}%
+                \IfValueTF{#3}{%
+                \global\def\theRight{%
+                    \setRTL%
+                        \sidTwoFormat\ltGetColVal{right}{#1}{#2} \sidOneFormat \ltGetColVal{right}{#3}{#4}%
+                }%
+                }{%
+                    \global\def\theRight{\setRTL\sidOneFormat\ltGetColVal{right}{#1}{#2}}%
+                }%
             }%
         }%
-    }%
+    }{%
+        \IfValueTF{#7}{%
+            \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidThreeFormat\ltGetColVal{right}{#5}{#6} \sidFourFormat\ltGetColVal{right}{#7}{#8}}%
+        }{%
+            \IfValueTF{#5}{%
+                \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4} \sidThreeFormat\ltGetColVal{right}{#5}{#6}}%
+            }{%
+                \IfValueTF{#3}{%
+                    \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2} \sidTwoFormat\ltGetColVal{right}{#3}{#4}}%
+                }{%
+                    \global\def\theRight{\sidOneFormat\ltGetColVal{right}{#1}{#2}}%
+                }%
+            }%
+        }%
+    }
 }
 
 % sets the multiple sid format to be empty
@@ -1394,17 +1493,21 @@ Script=Arabic%
         \colseprulecolor{\pgfkeysvalueof{\my/column/separator/rule/color}}%
         \mysloppy%
         \begin{paracol}{3}%
+        	\begin{nthcolumn}{0}%
 			\ltTypeography{}%
 			#1
             \ltTempTypeographyDefault%
-            \switchcolumn%
+            \end{nthcolumn}%          
+        	\begin{nthcolumn}{1}%
 			\ltTypeography{}%
 			#2
             \ltTempTypeographyDefault%
-            \switchcolumn%
+            \end{nthcolumn}%          
+        	\begin{nthcolumn}{2}%
 			\ltTypeography{}%
 			#3
             \ltTempTypeographyDefault%
+            \end{nthcolumn}%          
         \end{paracol}%
     }%
 }[]%

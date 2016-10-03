@@ -27,7 +27,7 @@
         \PackageError{%
         i18n-topic-keys}{Unknown key ‘\pgfkeyscurrentkey’.%
         }{%
-        Open the appropriate resource file and add \string\itKey{key}{value} or if there is a typing error, fix it.%
+        Open the appropriate resource file and add \string\itId{key}{value} or if there is a typing error, fix it.%
         }%
     }%
 }
@@ -54,15 +54,15 @@ false
     \renewcommand{\itCurrentTopic}{/#1/#2/#3/#4}%
 }
 %% The old way works just fine. 
-%\newcommand{\itKey}[2]{%
+%\newcommand{\itId}[2]{%
 %\pgfkeys{%
 %\itCurrentTopic/#1/.initial={#2}}%
 %}
 
-% The new way supports \itKey fully specified
-% or \itkey with just a key.  For the latter
+% The new way supports \itId fully specified
+% or \itId with just a key.  For the latter
 % it is necessary to first set \itTopic.
-\DeclareDocumentCommand\itKey{m m g g g g}{%
+\DeclareDocumentCommand\itId{m m g g g g}{%
     \IfValueTF {#3} {%
         \global\itTopic{#1}{#2}{#3}{#4}%
         \pgfkeys{%

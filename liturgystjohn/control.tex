@@ -5,7 +5,7 @@
 \input{\ltSystemPath/iso/res.iso.language.codes}
 
 \def\ltClientPath{clients/egy.gopaa}
-\input{\ltClientPath/settings}
+\input{\ltSystemPath/\ltClientPath/settings}
 %==================================================
 % Actors on separate line?
 %
@@ -51,8 +51,8 @@
 \makeevenfoot{ruled}{}{}{}
 \makeoddfoot{ruled}{}{}{}
 \setbool{subsectionInHeader}{true}% false to turn off 
-{\addtolength{\beforechapskip}{-3\baselineskip}
-{\addtolength{\afterchapskip}{-3\baselineskip}
+{\addtolength{\beforechapskip}{1\baselineskip}
+{\addtolength{\afterchapskip}{1\baselineskip}
 
 % to help with avoiding overfull 
 % hbox with narrow columns.

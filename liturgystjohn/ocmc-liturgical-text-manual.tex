@@ -1,63 +1,18 @@
 \documentclass[]{memoir}
-\usepackage{verbatim}
-%\usepackage{hyperref}
+
+\usepackage{system/oslw-documentation}
 \usepackage[hyphenate]{system/ocmc-liturgical-text} 
 
-\def\ltOcmcSystem{OCMC ShareLatex Liturgical Workbench}
-\def\ltOcmcSystemAcronymn{OSLW}
 
-\DeclareDocumentCommand\ltDocParms{m m g g g g g g}{%
-\color{blue}%
-\IfValueTF {#8}{%
-\{#1\}\{#2\}\{#3\} \{#4\}\{#5\}\{#6\} \{#7\}\{#8\}%
-}{%
-    \IfValueTF {#7}{%
-    \{#1\}\{#2\}\{#3\}\{#4\}\{#5\}\{#6\}\{#7\}%
-    }{%
-        \IfValueTF {#6}{%
-        \{#1\}\{#2\}\{#3\}\{#4\}\{#5\}\{#6\}%
-        }{%
-            \IfValueTF {#5}{%
-            \{#1\}\{#2\}\{#3\}\{#4\}\{#5\}%
-            }{%
-            \IfValueTF {#4}{%
-            \{#1\}\{#2\}\{#3\}\{#4\}%
-            }{%
-                \IfValueTF {#3}{%
-                \{#1\}\{#2\}\{#3\}%
-                }{%
-                    \IfValueTF {#2}{%
-                    \{#1\} \{#2\}%
-                    }{%
-                    \{#1\}%
-                    }%
-                }%
-            }%
-            }%
-        }%
-    }%
-}%
-\color{black}%
-}
-\newcommand{\ltDocCommand}[2]{%
-\color{blue}{\textbackslash #1#2} \color{black}
-}
+\title{How to Use the\\\bigskip
 
-\newenvironment{ltDocBlock}{
-\color{blue}\verbatim
-}
-{ 
-\endverbatim
-\color{black}
-}
-
-\newenvironment{myenv}{\begin{adjustwidth}{2cm}{}}{\end{adjustwidth}}
-
-\title{How to Use the\\\ltOcmcSystem  (\ltOcmcSystemAcronymn)\\ to Typeset Your Liturgical Translation}
+\ltOcmcSystem\   (\ltOcmcSystemAcronymn) \\\bigskip
+to Typeset Your Liturgical Translation}
 \author{Michael Colburn\\Orthodox Christian Mission Center (OCMC)}
 \date{\today}
 
 \begin{document}
+
 \maketitle
 \tableofcontents
 
@@ -67,17 +22,31 @@
 
 \ltSetPrimaryDomain{en}{uk}{lash}
 \ltLoadResources{liturgystjohn}
-\chapter{Part of the Divine Liturgy - Three Examples}
-\begin{ltDocBlock}
-\ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
 
-\ltDialogAloud{prayers}{exc01}
+\chapter{How to Use This Guide}
+
+This guide starts out by giving you three examples of part of the Divine Liturgy.  The first example is in English.  The second is in English and Greek.  The third is in Swahili, Greek, and English.  
+
+The second part gives you basic information to quickly get started.
+
+The rest of the guide gives you detailed information.
+
+Before reading this guide, you should watch the videos on the \emph{OSLW} page at \url{http://liml.org}.
+
+\chapter{Part of the Divine Liturgy - Three Examples}
+
+Users of the \ltOcmcSystem{} format text by writing \emph{commands}. For example, the commands
+
+\begin{ltDocBlock}[ex1]
+    \ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
 \end{ltDocBlock}
 
-The two commands (above) produce the following:
-\small
+\begin{ltDocBlock}[ex2]
+    \ltDialogAloud{prayers}{exc01}
+\end{ltDocBlock}
 
-\textbf{English:}
+produce the following \textbf{for English:}
+\small
 
 \ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
 
@@ -87,18 +56,18 @@ The two commands (above) produce the following:
 \ltSetRightDomain{gr}{gr}{cog}
 \ltLoadResources{liturgystjohn}
 \ltColumnsOn
-\textbf{English and Greek:}
+\textbf{and this for English and Greek:}
 
 \ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
 
 \ltDialogAloud{prayers}{exc01}
 
-\ltSetPrimaryDomain{shw}{ke}{oak}
+\ltSetPrimaryDomain{swh}{ke}{oak}
 \ltSetCenterDomain{en}{uk}{lash}
 \ltSetRightDomain{gr}{gr}{cog}
 \ltLoadResources{liturgystjohn}
 \ltColumnsOn
-\textbf{Swahili, English, and Greek:}
+\textbf{and this for Swahili, English, and Greek:}
 
 \ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
 
@@ -106,71 +75,135 @@ The two commands (above) produce the following:
 
 \ltColumnsOff
 \normalsize
-Things that start with a backslash character, that is, \textbackslash, are commands. 
+\begin{boxed}
+When you see a box like this, with a blue key \color{blue}\faKey{}\color{black}, it indicates a key point.  That is, important information that will help you better understand or use the system.
+\end{boxed}
+\begin{warning}
+When you see a box like this, with a red exclamation mark in a triangle, it indicates a warning.  That is, important information that will help you avoid making a mistake in how you use the system.
+\end{warning}
+\begin{boxed}
+Things that start with a backslash character, that is, \textbackslash, are \emph{commands}. Some commands are from \LaTeX, others are unique to the \ltOcmcSystemAcronymn{}.  Commands that are unique to the \ltOcmcSystemAcronymn{}\ always start with \textbackslash lt, e.g. \textbackslash ltActorDialog. The letters \emph{lt} stand for 'liturgical text'.  So, when you see a command that starts with \textbackslash lt, you know it is a command for producing liturgical text.  If the name of a command uses more than one word, they are joined together using \emph{camelCase}.  That is, the joined words are capitalized so you can tell them apart.  For example, \textbackslash ltActorDialog is a command with the acronymn \emph{lt} and the words \emph{actor} and \emph{dialog}.  So you can read the command more easily, the word \emph{actor} and \emph{dialog} are capitalized.
+\end{boxed}
+The first command (\getref{ex1})\footnote{Examples are numbered so that we can refer back to them.} says to look up two texts: the first is \ltDocParms{actors}{Priest}\ and the second is \ltDocParms{eu.lichrysbasil}{euLI.Key0201.text}.  The first line also says that the texts are to be formatted as an actor speaking a dialog in a low voice (\textbackslash ltActorDialogLowVoice).
 
-The first command says to look up two texts: the first is \ltDocParms{actors}{Priest}\ and the second is \ltDocParms{eu.lichrysbasil}{euLI.Key0201.text}.  The first line also says that the texts are to be formatted as an actor speaking a dialog in a low voice (\textbackslash ltActorDialogLowVoice).
-
-The second command says to look up the text \ltDocParms{prayers}{exc01}\ and format it as a dialog spoken aloud.
+The second command (\getref{ex2}) says to look up the text \ltDocParms{prayers}{exc01}\ and format it as a dialog spoken aloud.
 
 Notice that the two commands automatically inserted the rubrics \color{red}in a low voice \color{black}and \color{red}aloud \color{black} and automatically colored them red.  It also automatically colored the word \color{red}(Priest) \color{black}red.
+
+The same two commands produced text in one language (English), two languages (English and Greek), or three languages (Swahili, English, Greek).
 
 If you are a translator, or if you are entering the text of someone's translation, you do not need to know these commands or to write them.  They have already been created for the liturgical text you are working on.  This means you do not need to be concerned about formatting your translation for publication.
 
 The only thing you need to focus on is entering your translation into a computer file that can be used by the \ltOcmcSystem.
 
-How does the system know which translation to use?  The answer is something like the system used to find a verse in a Bible.  When the Bible was first written, there were no chapter or verse numbers.  These were added later to make it easy to find a verse.  For example, John 1:1 is the first verse of the first chapter of the Gospel of John.  It doesn't matter what translation you use, it will use the same numbering system as other Bibles.
+How does the system know which translation to use?  The answer is something like the method used to find a verse in a Bible.  When the Bible was first written, there were no chapter or verse numbers.  These were added later to make it easy to find a verse.  For example, John 1:1 is the first verse of the first chapter of the Gospel of John.  It doesn't matter what translation you use, it will use the same numbering system as other Bibles.
 
-For this reason, AGES Initiatives, Inc. and OCMC have created a way to identify every paragraph or part of a paragraph in the Eastern Orthodox Liturgical texts.  The system used by AGES and by OCMC is as follows.
+For this reason, AGES Initiatives, Inc. and OCMC created a way to identify every paragraph or part of a paragraph in the Eastern Orthodox Liturgical texts.  The method is as follows.
 
-All individual liturgical text is identified by five pieces of information:
+All individual liturgical text has an identifier made from five pieces of information:
 
 \begin{enumerate}
     \item language code, e.g. \emph{en} for English
     \item country code, e.g. \emph{uk} for United Kingdom
-    \item realm, e.g. \emph{lash} for Fr. Ephrem Lash
+    \item realm, e.g. \emph{lash} for Fr. Ephrem Lash, or \emph{oak} for the Orthodox Archdiocese of Kenya.
     \item topic, e.g. \emph{actors}
     \item key, e.g. \emph{Priest}
 \end{enumerate}
 
+\begin{boxed}
+Language codes come from the ISO 639-2 Code Table, that can be found at \url{https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes}.  Except for the most commonly spoken languages (e.g. English), the 3 charactor code should be used.
+\end{boxed}
+
+\begin{boxed}
+Country codes come from the ISO 639-2 Code Table, that can be found at \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}. 
+\end{boxed}
+
 Here is an example of how the text is stored in a computer file:
-\begin{ltDocBlock}
-\itKey{en}{uk}{lash}{actors}{Priest}{
-Priest
-}%
+
+\begin{ltDocBlock}[]
+    \itId{en}{uk}{lash}{actors}{Priest}{
+    Priest
+    }%
 \end{ltDocBlock}
 
-The command \ltDocCommand{ltKey}{}tells the system that what follows is a key.  The parts after the command are called \emph{parameters} and specify the language, country, realm, and key name.
+The command \ltDocCommand{ltId}{}tells the system that what follows is the parts of the identifier and the text.  The parts after the command are called \emph{parameters} and specify the language, country, realm, and key name.
 
 The language and country codes come from an ISO standard.  The realm is used to identify the version of the translation.
 
 \emph{en} means the English language, \emph{uk} means as spoken in the United Kingdom, and \emph{lash} is the realm used for translations by Fr. Ephrem Lash.  \emph{actors} is the topic, and \emph{Priest} is the key.
 
-Here is the key for the Greek text:
-\begin{ltDocBlock}
-\itKey{gr}{gr}{cog}{actors}{Priest}{
-ΙΕΡΕΥΣ
-}%
+Here is the identifier (Id) for the Greek text:
+\begin{ltDocBlock}[]
+    \itId{gr}{gr}{cog}{actors}{Priest}{
+    ΙΕΡΕΥΣ
+    }%
 \end{ltDocBlock}
 
-And, here is the key for the Swahili text:
+And, here is the Id for the Swahili text:
 
-\begin{ltDocBlock}
-\itKey{shw}{ke}{oak}{actors}{Priest}{
-KASISI
-}%
+\begin{ltDocBlock}[]
+    \itId{shw}{ke}{oak}{actors}{Priest}{
+    KASISI
+    }%
 \end{ltDocBlock}
 
-Now, compare the keys (above) for \ltDocParms{en}{uk}{lash}, \ltDocParms{gr}{gr}{cog}, and \ltDocParms{shw}{ke}{oak}.
+\begin{boxed}
+The text for translations is stored in files that start with the prefix \myBlue{res}, which is short for \emph{resource}.  Text is a resource for the system to use. Text files are stored in a folder that has a name using the language code, country code, and realm, but with hyphens, e.g. \myBlue{gr\textunderscore gr\textunderscore cog}.
+\end{boxed}
+\begin{boxed}
+Nearly all the files used in an \ltOcmcSystemAcronymn\ project end with the file extension \myBlue{tex}.  This indicates that they are a \LaTeX{} file.
+\end{boxed}
+Now, compare the Ids (above) for \ltDocParms{en}{uk}{lash}, \ltDocParms{gr}{gr}{cog}, and \ltDocParms{shw}{ke}{oak}.
 
-Each of the three keys has the same topic and key.
+Each of the three Ids has the same topic and key.
+
+The way we tell them apart is by the language code, country code, and realm that appear before the topic and key parts of the Id.
+
+But, when we format a text, we only tell the system the topic and key.  For example:
+
+\begin{ltDocBlock}[]
+    \ltActorDialogLowVoice{actors}{Priest}{eu.lichrysbasil}{euLI.Key0201.text} 
+\end{ltDocBlock}
+
+The formatting command \ltDocCommand{ltActorDialogLowVoice}\ does not have a language code, or country code, or realm.
+
+Formatting commands do not have actual text.  They just have information about the Ids the system is to use and how the system is supposed to format the text it retrieves using the Ids.
+
+\begin{boxed}
+Formatting commands are usually found in template files.  A template file name starts with \myBlue{tmp}\ and has the extension \myBlue{tex}.
+\end{boxed}
+
+So, how does the \ltOcmcSystemAcronymn{}\ know what domain or domains you want to use?
+
+There are three commands you can use to indicate which domains you want the system to use.
+
+To produce text in a single language:
+\begin{ltDocBlock}[]
+    \ltSetPrimaryDomain{en}{uk}{lash}
+\end{ltDocBlock}
+To produce text in two languages:
+\begin{ltDocBlock}[]
+    \ltSetPrimaryDomain{en}{uk}{lash}
+    \ltSetRightDomain{gr}{gr}{cog}
+\end{ltDocBlock}
+To produce text in three languages:
+\begin{ltDocBlock}[]
+    \ltSetPrimaryDomain{shw}{ke}{oak}
+    \ltSetCenterDomain{en}{uk}{lash}
+    \ltSetRightDomain{gr}{gr}{cog}
+\end{ltDocBlock}
+
+The \myBlue{PrimaryDomain}\ is used for producing text in a single language, or if there are multiple languages, it is used for the text in the left column.  The \myBlue{RightDomain}\ is used for producing text that has two or three languages, and is used for the text in the right column.  The \myBlue{CenterDomain} is used for producing text in three languages, and is used for the text that is in the center column.
+ 
+%    \ltColumnsOn
 
 If you are in a hurry, you can just read the section below to get started.  If you want to understand more, read the rest of this guide.
 
-\chapter{If You Are In a Hurry}
+\chapter{Quick Start}
 There is a lot of information in this guide.  But, if you just want to quickly learn how to use an OCMC ShareLatex project for your translation, here is what to do.
 \begin{enumerate}
     \item You need to get a ShareLatex account from \url{https://www.sharelatex.com/register}.  It is free.
-    \item You need to ask an OCMC staff member to create a ShareLatex OCMC project for your translation.  
+    \item You need to ask an OCMC staff member to create a ShareLatex OCMC project for your translation.  The way to ask for this is to go the page titled \emph{Contact} at the \url{http://liml.org} website.
     \item Once the project is ready, an OCMC staff member will notify you.  He or she will provide you with the name of the translation project, and the name of the folder and files in which you will put your translation.
     \item When you log on to the ShareLatex website, you will see your project listed.  Click on the project name to open it up.
     \item Click on the \textit{Recompile} button to create a PDF file of your translation.  The first time you open the project, instead of your translation you will see English or some other language.
@@ -218,16 +251,308 @@ By itself, the ocmc-liturgical-text package cannot solve the problem of misplace
 \end{enumerate}
 \chapter{The Details}
 \section{How to Enter Your Translation}
-Each piece of text has a key assigned to it.  For example:
 
-\begin{verbatim}
-\itKey{en}{uk}{lash}{pub.priest.servicebook}{li.liturgy.title.cover}{
-The Divine Liturgy of Our Father Among the Saints John Chrysostom
-}%
+Most of the text for the original Greek or for translations are in the folder \emph{resources}.  There is a folder within \emph{resources} for each domain.  Within that folder are one or more resource files.  A resource file starts with \emph{res} and ends with \emph{.tex}.
 
-\end{verbatim}
+When you open a resource file, you will see that each piece of text has a ID assigned to it.  For example:
+
+\begin{ltDocBlock}[original]
+    \itId{en}{uk}{lash}{prayers}{enarxis02}{
+        Blessed is the Kingdom of the Father, and of the Son, and of the Holy Spirit, now and for ever, and to the ages of ages.
+    }%
+\end{ltDocBlock}
+
+Notice that the ID and its text are defined using three lines. Notice that the first line ends with a \{ and the so does the last line of of the ID.  It is the second line that you want to replace with your translation.
+
+When your project coordinator sets up your project, he or she will use the text from some other domain, but change the domain information for the keys.
+
+If your domain happened to be \{shw\}\{ke\}\{oak\}, then when you first open your text file, you would see:
+
+\begin{ltDocBlock}[before]
+    
+    \itId{shw}{ke}{oak}{prayers}{enarxis02}{
+        Blessed is the Kingdom of the Father, and of the Son, and of the Holy Spirit, now and for ever, and to the ages of ages.
+    }%
+\end{ltDocBlock}
+
+After you replace the English text, it would look like this:
+
+\begin{ltDocBlock}[after]
+    
+    \itId{shw}{ke}{oak}{prayers}{enarxis02}{
+        Mhimidiwa ni ufalme wa Baba na Mwana na Roho Mtakatifu, sasa na siku zote hata milele na milele.
+    }%
+\end{ltDocBlock}
+
+\begin{warning}
+If you accidently delete a brace, that is, the \{ character or the \} character, or if you remove the percent sign, the system will be broken and not retrieve the text correctly or format it incorrectly.  So, be careful only to replace the second line.
+\end{warning}
+
+\chapter{Frequently Asked Questions}
+\section{How Do I Change the Number of Columns?}
+\begin{enumerate}
+\item Open the file your.choices/settings.tex
+\item Find the place that has the commands \ltDocCommand{ltSetPrimaryDomain}, \ltDocCommand{ltSetCenterDomain}, and \ltDocCommand{ltSetRightDomain}.  If you only want two domains, set the Primary Domain and the Right Domain to the desired domains.  Comment out the Center Domain.  If you want three domains, you need three domains uncommented: Primary, Center, and Right.
+\end{enumerate}
+\section{How do I change the text on my cover page?}
+The part of the text for the cover page that you can personally change is in the file your.choices/settings.tex.
+
+\section{How do I enter the text for my translation?}
+\begin{enumerate}
+\item Open the file your.choices/settings.tex
+\item Find the text for which you want to enter your translation.
+\item Note that the ID has three lines.  Replaces the second line with your translation.
+\end{enumerate}
+
+\section{How to I recomple the document?}
+
+Click on the blue button on the upper left that says, \emph{Recompile}.
+
+\section{How do I download my PDF file?}
+\begin{enumerate}
+\item The top of the pop out window that will appear has a section titled \emph{Download}.
+\item Click on the icon that says \emph{PDF}.
+\item The PDF file will download in a manner that you are accustomed to for your browser and operating system.
+\end{enumerate}
+
 \vfill
 
+%==========================================
+% GLOSSARY
+%===========================================
+
+\newgeometry{
+top=3.5cm,
+bottom=3.5cm,
+left=3.7cm,
+right=4.7cm,
+columnsep=30pt
+}
+
+\fancyhead[L]{\textsf{\rightmark}} % Top left header
+\fancyhead[R]{\textsf{\leftmark}} % Top right header
+\renewcommand{\headrulewidth}{1.4pt} % Rule under the header
+\fancyfoot[C]{\textbf{\textsf{\thepage}}} % Bottom center footer
+\renewcommand{\footrulewidth}{1.4pt} % Rule under the footer
+\pagestyle{fancy} % Use the custom headers and footers throughout the document
+
+\newcommand{\entry}[4]{\markboth{#1}{#1}\textbf{#1}\ {(#2)}\ \textit{#3}\ $\bullet$\ {#4}}  % Defines the command to print each word on the page, \markboth{}{} prints the first word on the page in the top left header and the last word in the top right
+
+\setlength{\parskip}{5pt}\chapter{Glossary}
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	SECTION A
+%----------------------------------------------------------------------------------------
+\begin{multicols}{2}
+
+\section*{A}
+
+\entry{AGES Initiatives, Inc.}{noun phrase}{}{A not-for-profit organization in the USA, founded by Fr. Seraphim Dedes. See \url{http://www.agesinitiatives.com}.}
+
+%----------------------------------------------------------------------------------------
+%	SECTION B
+%----------------------------------------------------------------------------------------
+
+\section*{B}
+
+%----------------------------------------------------------------------------------------
+%	SECTION C
+%----------------------------------------------------------------------------------------
+
+\section*{C}
+
+\entry{Center Domain}{noun phrase}{}{The Center Domain is the domain used to produce text for the center column of a document with three columns, one column for each of three domains. See \textbf{Domain, Primary Domain, and Right Domain.}}
+
+\entry{command}{noun}{}{A statement that instructs \LaTeX to do something.  Statements start with a backslash, that is, \textbackslash.\ Commands that are specific to the \ltOcmcSystemAcronymn\ start with \textbackslash lt.}
+
+\entry{country code}{noun phrase}{}{A two or three character code that identifies a specific country.  The \ltOcmcSystemAcronymn uses codes from the ISO 639-2 Code Table, that can be found at \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}.}
+
+%----------------------------------------------------------------------------------------
+%	SECTION D
+%----------------------------------------------------------------------------------------
+
+\section*{D}
+
+\entry{domain}{noun}{}{The unique identifier of a specific version of text.  A domain has three parts: a language code, a country code, and a realm.  For example, en\textunderscore uk\textunderscore lash uniquely identifies translations by Fr. Ephrem Lash that are in the English language as spoken in the United Kingdom. See \textbf{country code, language code, and realm}.  Also see \textbf{CenterDomain, PrimaryDomain, and RightDomain.}}
+
+%----------------------------------------------------------------------------------------
+%	SECTION E
+%----------------------------------------------------------------------------------------
+
+\section*{E}
+
+%----------------------------------------------------------------------------------------
+%	SECTION F
+%----------------------------------------------------------------------------------------
+
+\section*{F}
+
+%----------------------------------------------------------------------------------------
+%	SECTION G
+%----------------------------------------------------------------------------------------
+
+\section*{G}
+
+%----------------------------------------------------------------------------------------
+%	SECTION H
+%----------------------------------------------------------------------------------------
+
+\section*{H}
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION I
+%----------------------------------------------------------------------------------------
+
+\section*{I}
+
+\entry{id}{noun}{}{Short for \emph{identifier}. In the \ltOcmcSystemAcronymn\ system, an id is the unique identifer of a piece of text.  It is made up from a language code, a country code, a realm, a topic, and a key.}
+%----------------------------------------------------------------------------------------
+%	SECTION J
+%----------------------------------------------------------------------------------------
+
+\section*{J}
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION K
+%----------------------------------------------------------------------------------------
+
+\section*{K}
+
+\entry{key}{noun}{}{In the \ltOcmcSystemAcronymn\ system, a key is the fifth part of an \emph{id}.  For example, there are keys for \emph{Priest} and \emph{Deacon}.  A key by itself does not uniquely identify a text.  It is combined with a language code, country code, realm, and topic.}
+
+%----------------------------------------------------------------------------------------
+%	SECTION L
+%----------------------------------------------------------------------------------------
+
+\section*{L}
+
+\entry{language code}{noun phrase}{}{A two or three character code that identifies a specific language.  The \ltOcmcSystemAcronymn uses codes from the ISO 639-2 Code Table, that can be found at \url{https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes.}}
+
+\entry{\LaTeX}{noun}{}{A document preparation system. The OSTW uses it to produce PDF files. See \url{https://en.wikipedia.org/wiki/LaTeX}.}
+
+\entry{lt}{acronymn}{}{liturgical text.}
+
+%----------------------------------------------------------------------------------------
+%	SECTION M
+%----------------------------------------------------------------------------------------
+
+\section*{M}
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION N
+%----------------------------------------------------------------------------------------
+
+\section*{N}
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION O
+%----------------------------------------------------------------------------------------
+
+\section*{O}
+
+\entry{OALD}{acronymn}{}{The Oxford Advanced Learner's Dictionary.}
+
+\entry{OCMC}{acronymn}{}{Orthodox Christian Mission Center.  See \url{www.ocmc.org}.}
+
+\entry{OSLW}{acronymn}{}{OCMC ShareLatex Liturgical Workbench.  This is the name of the system developed by OCMC that uses the ShareLatex website to provide assistance to translators of Eastern Orthodox Christian liturgical texts.}
+
+%----------------------------------------------------------------------------------------
+%	SECTION P
+%----------------------------------------------------------------------------------------
+
+\section*{P}
+
+\entry{Primary Domain}{noun phrase}{}{The Primary Domain is the main domain used to produce a document.  It is used for the cover page and preface.  It is also used for the text of a monolingual document.  If the document has two or more additional domains, the Primary Domain is used for the left column. See \textbf{Center Domain, Domain, and Right Domain.}}
+
+%----------------------------------------------------------------------------------------
+%	SECTION Q
+%----------------------------------------------------------------------------------------
+
+\section*{Q}
+
+%----------------------------------------------------------------------------------------
+%	SECTION R
+%----------------------------------------------------------------------------------------
+
+\section*{R}
+
+\entry{realm}{noun}{}{An acronymn or a name that together with a language code and country code uniquely identifies a version of the text.  For example, en\textunderscore uk\textunderscore lash uniquely identifies translations by Fr. Ephrem Lash.  Another example of a realm is \emph{oak}, which is an acronymn for the Orthodox Archdiocese of Kenya. See \textbf{domain}.}
+
+\entry{Right Domain}{noun phrase}{}{The Right Domain is the domain used to produce text for the right column of a document with two or three columns. See \textbf{Center Domain, Domain, and Primary Domain.}}
+
+%----------------------------------------------------------------------------------------
+%	SECTION S
+%----------------------------------------------------------------------------------------
+
+\section*{S}
+
+\entry{ShareLatex}{noun}{}{A website that allows people to work together to create PDF files using \LaTeX.  See \url{www.sharelatex.com}.}
+%----------------------------------------------------------------------------------------
+%	SECTION T
+%----------------------------------------------------------------------------------------
+
+\section*{T}
+
+\entry{topic}{noun}{}{In the \ltOcmcSystemAcronymn\ system, a topic is the fourth part of an \emph{id} and is a word that groups together keys.  For example, the keys \emph{Priest}, \emph{Deacon}, etc. all all grouped together in the \emph{actors} topic.  This allows the system or people to quickly find keys that are related to one another.}
+
+\entry{typeset}{verb}{OALD}{To prepare a book, etc. for printing.}
+%----------------------------------------------------------------------------------------
+%	SECTION U
+%----------------------------------------------------------------------------------------
+
+\section*{U}
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION V
+%----------------------------------------------------------------------------------------
+
+\section*{V}
+
+%----------------------------------------------------------------------------------------
+%	SECTION W
+%----------------------------------------------------------------------------------------
+
+\section*{W}
+
+%----------------------------------------------------------------------------------------
+%	SECTION X
+%----------------------------------------------------------------------------------------
+
+\section*{X}
+
+%----------------------------------------------------------------------------------------
+%	SECTION Y
+%----------------------------------------------------------------------------------------
+
+\section*{Y}
+
+%----------------------------------------------------------------------------------------
+%	SECTION Z
+%----------------------------------------------------------------------------------------
+
+\section*{Z}
+
+
+\end{multicols}
+\parskip=0pt plus 1pt
+\restoregeometry
 \pagebreak
 
+%----------------------------------------------------------------------------------------
+%	INDEX
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+\phantomsection
+\setlength{\columnsep}{0.75cm}
+\addcontentsline{toc}{chapter}{\textcolor{ocre}{Index}}
+\printindex
+
+%----------------------------------------------------------------------------------------
 \end{document}
